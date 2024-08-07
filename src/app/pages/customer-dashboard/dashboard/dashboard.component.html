@@ -1,0 +1,139 @@
+<div class="back-panel h-100 p-4">
+  <div class="dashboard bg-dark">
+    <div class="header-container">
+      <div class="text-center">
+        <img src="assets/images/logo/veltuff-logo.svg" class="login-logo" />
+      </div>
+      <h2 class="h2">SUSTAINABILITY DASHBOARD</h2>
+      <div class="sign-out-button">
+        <button title="Sign Out" [routerLink]="'/auth/login'" class="btn btn-link">
+          <i class="feather icon-log-out log-out-btn"></i>
+          <!-- <i class="fa fa-sign-out"></i> -->
+        </button>
+      </div>
+    </div>
+
+    <div class="row mb-3" *ngIf="isCustomerAdmin">
+      <div class="col-xl-5 col-lg-6">
+        <!-- <div class="col-12 dash-card"> -->
+          <ng-select
+            [items]="branchList"
+            bindLabel="CompanyBranchName"
+            bindValue="BranchId"
+            [(ngModel)]="branchId"
+            (clear)="onClearBranch()"
+            (search)="onSearchBranch($event)"
+            (change)="onChangeBranch($event)"
+            [virtualScroll]="true"
+            (scrollToEnd)="onScrollToEnd()"
+            [placeholder]="'Select Branch'"
+          >
+          </ng-select>
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-5 col-lg-6">
+        <div class="col-12 dash-card text-center">
+          <img src="assets/images/logo/normalWay.svg" class="img-fluid" />
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-6">
+        <div class="row">
+          <div class="col-xl-7 col-12">
+            <div class="col-12 dash-card text-center">
+              <img
+                src="assets/images/logo/veltuffWay.svg"
+                class="img-fluid image-height"
+              />
+            </div>
+          </div>
+          <div class="col-xl-5 col-12">
+            <div class="col-12 dash-card dountchart">
+              <app-apex-chart [donutChart]="semiDonut"> </app-apex-chart>
+              <p [align]="'center'" class="less-carbon">
+                Less Carbon Emission <br />
+                with VELTUFF WAY
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="dash-card">
+          <app-apex-chart
+            [barSimpleChart]="barSimpleChart"
+            [cardTitle]="'Carbon Reduction in the parcels delivered this year.'"
+          ></app-apex-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-3 col-lg-6">
+        <div class="dash-card veltuff-garment">
+          <app-apex-chart
+            [donutChart]="donutChartForGarment"
+            [cardTitle]="
+              'Start of life% of Veltuff garment purchased (Purchasing Code - NOOS)'
+            "
+          >
+          </app-apex-chart>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6">
+        <div class="col-12 dash-card">
+          <app-apex-chart
+            [lineAreaChart]="lineAreaChart"
+            [cardTitle]="'GRS Material used in purchases.'"
+          ></app-apex-chart>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div class="col-12 dash-card">
+          <app-apex-chart
+            [donutChart]="donutChartEndOfLife"
+            [cardTitle]="'End Of life recycled by KG.'"
+          ></app-apex-chart>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="my-2 h2">OUR DELIVERY PARTNER’S COMMITMENTS</h2>
+    <div class="row">
+      <div class="col-xl-8 col-lg-6">
+        <div class="foot-card">
+          <div class="row align-items-center">
+            <div class="col-lg-4">
+              <img src="assets/images/logo/busImg.svg" class="img-fluid" />
+            </div>
+            <div class="col-lg-8">
+              So far in 2024 we delivered <br />
+              <strong> {{ dashboardData?.ParcelDelivered ?? 0 }}</strong> <br />
+              parcels to your customers on all-electric vehicles which is
+              {{ dashboardData?.EVPercentage ?? 0 }}% of your total parcels.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6">
+        <div class="foot-card flex">
+          <div class="row align-items-center">
+            <div class="col-lg-5">
+              <img src="assets/images/logo/co2.svg" class="img-fluid" />
+            </div>
+            <div class="col-lg-7">
+              Saving <br />
+              <strong> {{ dashboardData?.SavedCO2 ?? 0}}KG</strong> <br />
+              of Co2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

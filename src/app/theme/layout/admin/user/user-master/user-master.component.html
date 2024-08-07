@@ -1,0 +1,252 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h5>USER DETAILS</h5>
+      </div>
+      <div class="card-block">
+        <form
+          [formGroup]="userForm"
+          (ngSubmit)="onSubmit()"
+          #userFrm="ngForm"
+          novalidate
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>First Name <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  autocomplete="off"
+                  formControlName="firstName"
+                  placeholder="Enter first name"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['firstName']?.errors?.['required']
+                  }"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['firstName']?.errors?.['required']
+                  "
+                >
+                  First Name is required
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Last Name <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  autocomplete="off"
+                  formControlName="lastName"
+                  placeholder="Enter last name"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['lastName']?.errors?.['required']
+                  }"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['lastName']?.errors?.['required']
+                  "
+                >
+                  Last Name is required
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Email <span class="text-danger">*</span></label>
+                <input
+                  type="email"
+                  class="form-control"
+                  autocomplete="off"
+                  formControlName="email"
+                  placeholder="Enter email"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['email']?.errors?.['required']
+                  }"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['email']?.errors?.['required']
+                  "
+                >
+                  Email is required
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Password <span class="text-danger">*</span></label>
+                <input
+                  type="password"
+                  class="form-control"
+                  autocomplete="off"
+                  formControlName="password"
+                  placeholder="Enter password"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['password']?.errors?.['required']
+                  }"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['password']?.errors?.['required']
+                  "
+                >
+                  Password is required
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  autocomplete="off"
+                  formControlName="phoneNo"
+                  placeholder="Enter phone number"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['phoneNo']?.errors?.['pattern']
+                  }"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['phoneNo']?.errors?.['pattern']
+                  "
+                >
+                  Invalid Phone Number
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Role <span class="text-danger">*</span></label>
+                <select
+                  class="form-control"
+                  formControlName="roleId"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['roleId']?.errors?.['required']
+                  }"
+                >
+                  <option disabled selected value="">Select Role</option>
+                  <option *ngFor="let role of roleList" [value]="role.RoleId">
+                    {{ role.RoleName }}
+                  </option>
+                </select>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['roleId']?.errors?.['required']
+                  "
+                >
+                  Role is required
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="isNotAdmin">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Select Company <span class="text-danger">*</span></label>
+                <ng-select
+                  [items]="companyList"
+                  bindLabel="CompanyName"
+                  bindValue="CompanyId"
+                  (change)="onCompanyChange($event)"
+                  formControlName="companyId"
+                  [placeholder]="'Select Company'"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['companyId']?.errors?.['required']
+                  }"
+                >
+                </ng-select>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['companyId']?.errors?.['required']
+                  "
+                  >Company is required</span
+                >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Select Branch <span class="text-danger">*</span></label>
+                <ng-select
+                  [items]="branchList"
+                  bindLabel="BranchName"
+                  bindValue="BranchId"
+                  formControlName="branchId"
+                  (clear)="onClearBranch()"
+                  (search)="onSearchBranch($event)"
+                  [virtualScroll]="true"
+                  (scrollToEnd)="onScrollToEnd()"
+                  [placeholder]="'Select Branch'"
+                  [ngClass]="{
+                    'border-danger':
+                      userFrm.submitted &&
+                      userFormControl?.['branchId']?.errors?.['required']
+                  }"
+                >
+                </ng-select>
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    userFrm.submitted &&
+                    userFormControl?.['branchId']?.errors?.['required']
+                  "
+                  >Branch is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-12 text-center">
+              <button
+                type="submit"
+                class="btn btn-dark px-5 save-btn"
+                title="Save"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

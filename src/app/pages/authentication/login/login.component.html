@@ -1,0 +1,59 @@
+<div class="auth-wrapper">
+  <div class="auth-content">
+    <div class="auth-bg">
+      <span class="r"></span>
+      <span class="r s"></span>
+      <span class="r s"></span>
+      <span class="r"></span>
+    </div>
+    <div class="card">
+      <div class="card-body text-center login-card">
+        <div class="mb-4">
+          <img src="assets/images/logo/veltuff-logo.svg" class="login-logo" />
+        </div>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="doLogin()" #login="ngForm" novalidate>
+          <!-- <h3 class="mb-4">Login</h3> -->
+          <hr />
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" autocomplete="off"
+              title="Email" />
+          </div>
+          @if(login.submitted && loginFormControl?.['email']?.errors?.['required']) {
+          <span class="text-danger error mb-2">
+            Email is required
+          </span>
+          }
+          @if (login.submitted && loginFormControl?.['email']?.errors?.['email']) {
+          <span class="text-danger error mb-2">
+            Enter a valid email address
+          </span>
+          }
+          <div class="input-group mt-3">
+            <input type="password" class="form-control" placeholder="Password" autocomplete="off" title="Password"
+              formControlName="password" />
+          </div>
+          @if(login.submitted && loginFormControl?.['password']?.errors?.['required']) {
+          <span class="text-danger error mb-2">
+            Password is required
+          </span>
+          }
+
+          <!-- <div class="form-group text-start mt-3">
+            <div class="checkbox checkbox-fill d-inline">
+              <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="" />
+              <label for="checkbox-fill-a1" class="cr"> Save Details</label>
+            </div>
+          </div> -->
+
+          <button type="submit" class="btn btn-dark mt-3 col-12 mb-4 text-primary">Login</button>
+        </form>
+        <p class="mb-2  text-white">
+          Forgot password? <a [routerLink]="['/auth/forgot-password']" class="text-primary">Reset</a>
+        </p>
+        <!-- <p class="mb-0 text-muted">
+          Don’t have an account? <a [routerLink]="['/auth/signup']">Sign up</a>
+        </p> -->
+      </div>
+    </div>
+  </div>
+</div>

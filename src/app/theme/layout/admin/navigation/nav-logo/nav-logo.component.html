@@ -1,0 +1,18 @@
+<div>
+  <a [routerLink]="['/home']" class="b-brand">
+    <!-- <div class="b-bg">
+      <img src="assets/images/logo/pickfords-logo-white.png">
+    </div> -->
+    <!-- <span class="b-title">Veltuff®</span> -->
+    <img src="assets/images/logo/veltuff-logo.svg" class="img-fluid w-75" />
+
+  </a>
+  <a
+    href="javascript:"
+    class="mobile-menu"
+    [ngClass]="{ on: navCollapsed }"
+    id="mobile-collapse"
+    (click)="navCollapse()"
+    ><span></span
+  ></a>
+</div>

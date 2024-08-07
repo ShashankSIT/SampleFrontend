@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-8 m-auto">
+            <h5>USER LIST</h5>
+          </div>
+          <div class="col-md-4">
+            <button
+              class="btn btn-primary float-right"
+              title="Add User"
+              type="button"
+              (click)="onAddEdit(null)"
+            >
+              <i class="feather icon-plus mr-5"></i> Add User
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-block">
+        <app-data-list
+          [columns]="colDefs"
+          [apiDetails]="apiDetails"
+          [tableType]="tableType"
+          (onActionEvent)="onAction($event)"
+          #dataList
+        ></app-data-list>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-loader">
+  <i class="pct-loader1 anim-rotate"></i>
+</div>

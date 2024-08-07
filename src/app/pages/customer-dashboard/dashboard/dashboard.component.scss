@@ -1,0 +1,236 @@
+.dashboard {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section,
+.chart,
+.delivery-stats,
+.comparison,
+.partners {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.h2 {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    line-height: 75px;
+}
+
+h2 {
+    color: #4682B4;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.percentage,
+.weight {
+    font-size: 2em;
+    font-weight: bold;
+    color: #FF6347;
+}
+
+.chart h3,
+.delivery-stats h3,
+.comparison h3 {
+    color: #20B2AA;
+}
+
+.back-panel {
+    background-color: #1e1e1e;
+    min-height: 100vh;
+}
+
+.dash-card {
+    background-color: #1A1A1A;
+    min-height: 95%;
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.less-carbon {
+    position: absolute;
+    bottom: 62px;
+    text-align: center;
+    margin: 0 auto;
+    display: table;
+    left: calc(50% - 63px);
+}
+
+.bar-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.bar {
+    width: 20px;
+    background-color: #4682B4;
+    text-align: center;
+    color: #fff;
+}
+
+.co2-saving,
+.co2-stat {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FF6347;
+}
+
+.comparison span {
+    font-weight: bold;
+}
+
+.partners h3 {
+    text-align: center;
+}
+
+::ng-deep .card {
+    background: #1A1A1A !important;
+    margin-bottom: 0;
+}
+
+::ng-deep .card .card-header {
+    text-align: center !important;
+    border: none;
+    padding-bottom: 0px;
+
+    .card-block {
+        padding: 5px 25px !important;
+    }
+
+    h5 {
+        color: white !important;
+        font-size: 18px;
+    }
+
+    h5:after {
+        opacity: 0;
+    }
+}
+
+:host ::ng-deep .card .card-block,
+.card .card-body {
+    padding: 5px 25px
+}
+
+:host ::ng-deep .apexcharts-tooltip.apexcharts-theme-light {
+    background-color: #1A1A1A !important;
+}
+
+:host ::ng-deep .apexcharts-tooltip-title,
+.apexcharts-tooltip-series-group {
+    background-color: #1A1A1A !important;
+}
+
+.circular-progress-container {
+    display: inline-block;
+    position: relative;
+    height: 260px;
+    padding: 20px;
+}
+
+.circular-progress {
+    width: 100%;
+}
+
+.circular-progress-bg {
+    fill: none;
+    stroke: #454545;
+    stroke-width: 10;
+}
+
+.circular-progress-bar {
+    fill: none;
+    stroke: #c7f001;
+    stroke-width: 11;
+    stroke-linecap: square;
+    transition: stroke-dashoffset 0.3s ease;
+}
+
+.circular-progress-text {
+    font-size: 20px;
+    fill: #C7F001;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 900;
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.foot-card {
+    background: #8DB638;
+    color: white;
+    border-radius: 20px;
+    font-size: 2em;
+    height: 95%;
+    margin-bottom: 20px;
+    font-weight: normal;
+    padding: 2em;
+
+    strong {
+        font-size: 2em;
+    }
+}
+
+.image-height {
+    max-height: 244px;
+}
+
+::ng-deep .dountchart .card-header {
+    display: none;
+}
+
+::ng-deep .veltuff-garment .card-header h5 {
+    font-size: 0.8em;
+}
+
+.header-container {
+    position: relative;
+    /* Allows positioning of child elements */
+}
+
+.sign-out-button {
+    position: absolute;
+    top: 5px;
+    right: -40px;
+}
+
+.log-out-btn {
+    font-size: 30px !important;
+}
+
+:host ::ng-deep button.btn.btn-link {
+    text-decoration: none !important;
+    color: #c7f001 !important;
+}
+
+:host ::ng-deep .ng-select-container {
+    background: #1a1a1a !important;
+    border: none !important;
+    color: #fff !important;
+}
+
+:host ::ng-deep div.ng-input input {
+    color: #fff;
+}
+
+:host ::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+    top: 8px !important;
+    left: 0px !important;
+}
