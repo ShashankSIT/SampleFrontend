@@ -1,3 +1,6 @@
+@import '/src/scss/variables.scss';
+
+
 // #http-loader {
 //   top: 0;
 //   left: 0;
@@ -107,7 +110,7 @@
       position: absolute;
       inset: 0px;
       border-radius: 50%;
-      border: 5px solid #C7F001;
+      border: 5px solid $primary-color;;
       animation: prixClipFix 2s linear infinite ;
     }
   }

@@ -14,11 +14,6 @@ const routes: Routes = [
     loadChildren: () => import('../app/pages/authentication/authentication.module').then(m => m.AuthenticationModule)
   },
   {
-    path: 'customer',
-    loadChildren: () => import('../app/pages/customer-dashboard/customer-dashboard.module').then(m => m.CustomerDashboardModule),
-    canActivate: [canActivate],
-  },
-  {
     path: '',
     component: AdminComponent,
     children: [

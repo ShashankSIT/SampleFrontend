@@ -23,16 +23,8 @@ export interface Navigation extends NavigationItem {
 
 const NavigationItems = [
   {
-    id: 'home',
-    title: 'Home',
-    type: 'item',
-    url: '/home',
-    icon: 'feather icon-home',
-    classes: 'nav-item'
-  },
-  {
     id: 'user',
-    title: 'User',
+    title: 'User-Mat Table',
     type: 'item',
     url: '/user',
     icon: 'feather icon-user',

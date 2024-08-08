@@ -175,72 +175,9 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="isNotAdmin">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Select Company <span class="text-danger">*</span></label>
-                <ng-select
-                  [items]="companyList"
-                  bindLabel="CompanyName"
-                  bindValue="CompanyId"
-                  (change)="onCompanyChange($event)"
-                  formControlName="companyId"
-                  [placeholder]="'Select Company'"
-                  [ngClass]="{
-                    'border-danger':
-                      userFrm.submitted &&
-                      userFormControl?.['companyId']?.errors?.['required']
-                  }"
-                >
-                </ng-select>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    userFrm.submitted &&
-                    userFormControl?.['companyId']?.errors?.['required']
-                  "
-                  >Company is required</span
-                >
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Select Branch <span class="text-danger">*</span></label>
-                <ng-select
-                  [items]="branchList"
-                  bindLabel="BranchName"
-                  bindValue="BranchId"
-                  formControlName="branchId"
-                  (clear)="onClearBranch()"
-                  (search)="onSearchBranch($event)"
-                  [virtualScroll]="true"
-                  (scrollToEnd)="onScrollToEnd()"
-                  [placeholder]="'Select Branch'"
-                  [ngClass]="{
-                    'border-danger':
-                      userFrm.submitted &&
-                      userFormControl?.['branchId']?.errors?.['required']
-                  }"
-                >
-                </ng-select>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    userFrm.submitted &&
-                    userFormControl?.['branchId']?.errors?.['required']
-                  "
-                  >Branch is required</span
-                >
-              </div>
-            </div>
-          </div>
           <div class="row mt-4">
             <div class="col-md-12 text-center">
-              <button
-                type="submit"
-                class="btn btn-dark px-5 save-btn"
-                title="Save"
-              >
+              <button type="submit" class="btn btn-success px-5" title="Save">
                 Save
               </button>
             </div>

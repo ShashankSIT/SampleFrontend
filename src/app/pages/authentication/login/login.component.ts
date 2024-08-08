@@ -81,7 +81,6 @@ export class LoginComponent implements OnInit {
                 Email: LoginDetail.Email,
                 RoleName: LoginDetail.RoleName,
                 RoleId: LoginDetail.RoleId,
-                BranchId: LoginDetail.BranchId
               };
               this.storageService.setValue(StorageKey.loginData, loginData);
               this.commonService.showNotification(
@@ -89,11 +88,7 @@ export class LoginComponent implements OnInit {
                 data.Message,
                 NotificationType.SUCCESS,
               );
-              if (LoginDetail.RoleName == RoleName.Customer || LoginDetail.RoleName == RoleName.CustomerAdmin) {
-                this.router.navigate(['/customer']);
-              } else {
-                this.router.navigate(['/home']);
-              }
+              this.router.navigate(['/user']);
             }
           } else {
             this.commonService.showNotification(

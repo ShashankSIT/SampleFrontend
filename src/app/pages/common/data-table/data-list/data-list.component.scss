@@ -1,11 +1,13 @@
+@import '/src/scss/variables.scss';
+
 table {
   width: 100%;
 }
 .table-header {
-  background: #121212;  
+  background: $primary-color;  
 }
 .table-header th {
-  color: #c7f001;
+  color: $white;
 }
 // .search-input {
 //   width: 20%;
