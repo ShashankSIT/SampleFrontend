@@ -9,10 +9,10 @@
     <div class="card">
       <div class="card-body text-center login-card">
         <div class="mb-4">
-          <img src="assets/images/logo/veltuff-logo.svg" class="login-logo" />
+          <!-- <img src="assets/images/logo/veltuff-logo.svg" class="login-logo" /> -->
+          <img src="assets/images/logo/sample-logo.png" class="login-logo" />
         </div>
         <form class="login-form" [formGroup]="loginForm" (ngSubmit)="doLogin()" #login="ngForm" novalidate>
-          <!-- <h3 class="mb-4">Login</h3> -->
           <hr />
           <div class="input-group">
             <input type="email" class="form-control" placeholder="Email" formControlName="email" autocomplete="off"
@@ -45,9 +45,9 @@
             </div>
           </div> -->
 
-          <button type="submit" class="btn btn-dark mt-3 col-12 mb-4 text-primary">Login</button>
+          <button type="submit" class="btn btn-primary mt-3 col-12 mb-4">Login</button>
         </form>
-        <p class="mb-2  text-white">
+        <p class="mb-2">
           Forgot password? <a [routerLink]="['/auth/forgot-password']" class="text-primary">Reset</a>
         </p>
         <!-- <p class="mb-0 text-muted">

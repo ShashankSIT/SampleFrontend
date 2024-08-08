@@ -9,7 +9,6 @@
   overflow: hidden;
   min-width: 100%;
   min-height: 100vh;
-  background-color: #212121;
 
   a,
   p > a {
@@ -112,7 +111,7 @@
         &:nth-child(3) {
           left: -150px;
           bottom: 150px;
-          background: #C7F001;
+          background: $success-color;
         }
       }
 

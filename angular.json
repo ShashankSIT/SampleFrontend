@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "veltuff": {
+    "sample-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -21,7 +21,7 @@
             "allowedCommonJsDependencies": [
               "apexcharts"
             ],
-            "outputPath": "dist/veltuff",
+            "outputPath": "dist/sample-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "veltuff:build:production"
+              "buildTarget": "sample-frontend:build:production"
             },
             "development": {
-              "buildTarget": "veltuff:build:development"
+              "buildTarget": "sample-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "veltuff:build"
+            "buildTarget": "sample-frontend:build"
           }
         },
         "test": {
