@@ -1,3 +1,5 @@
+@import '/src/scss/variables.scss';
+
 .login-logo {
     max-width: 160px;
 }
@@ -16,6 +18,7 @@ h4 {
     color: $primary-color !important;
     cursor: pointer;
 }
+
 .auth-wrapper .auth-content {
     width: 475px;
 }
