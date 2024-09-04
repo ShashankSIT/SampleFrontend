@@ -34,9 +34,8 @@ export class SpinnerComponent implements OnDestroy {
   constructor(
     private router: Router,
     //@Inject(DOCUMENT) private document: Document,
-    private sharedService: SharedService
-  ) {
-  }
+    private sharedService: SharedService,
+  ) {}
 
   ngOnInit(): void {
     // this.router.events.subscribe(

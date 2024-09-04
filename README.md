@@ -1,4 +1,5 @@
 Step By Step Implementation Of Project
+
 1. Clone this repository to your local path.
 2. Open your project and search for 'sample-frontend' in whole project using 'Cltr' + 'Shift' + 'F'.
 3. Replace it with your project name. eg. Shaligram-Infotech-Frontend.
@@ -19,13 +20,13 @@ Datta Able is a free angular admin dashboard template built with Angular and lat
 [Pro version](https://codedthemes.com/item/datta-able-angular/?utm_source=free_demo&utm_medium=codedthemes&utm_campaign=button_download_premium) of Datta Able Angular Dashboard template contains features like TypeScript, Apps, Authentication Methods (i.e. JWT), Advance Components, Form Plugins, Layouts, Widgets, and many more.
 
 | [Datta Able Free](https://codedthemes.com/demos/admin-templates/datta-able/angular/free/dashboard) | [Datta Able](https://codedthemes.com/item/datta-able-angular/?utm_source=free_demo&utm_medium=codedthemes&utm_campaign=button_download_premium)    |
-| -------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------- |
-| **9** Demo pages                                                                                   | **45+** demo pages                                                |
-| -                                                                                                  | ✓ Multi-language                                                  |
-| -                                                                                                  | ✓ Dark/Light Mode 🌓                                              |
-| -                                                                                                  | ✓ TypeScript version                                              |
-| -                                                                                                  | ✓ 6+ color Options                                                |
-| -                                                                                                  | ✓ RTL                                                             |
+| -------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **9** Demo pages                                                                                   | **45+** demo pages                                                                                                                                 |
+| -                                                                                                  | ✓ Multi-language                                                                                                                                   |
+| -                                                                                                  | ✓ Dark/Light Mode 🌓                                                                                                                               |
+| -                                                                                                  | ✓ TypeScript version                                                                                                                               |
+| -                                                                                                  | ✓ 6+ color Options                                                                                                                                 |
+| -                                                                                                  | ✓ RTL                                                                                                                                              |
 | ✓ MIT License                                                                                      | ✓ [Pro License](https://codedthemes.com/item/datta-able-angular/?utm_source=free_demo&utm_medium=codedthemes&utm_campaign=button_download_premium) |
 
 ## Why Datta Able?

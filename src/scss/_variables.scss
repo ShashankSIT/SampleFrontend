@@ -10,10 +10,11 @@ $Menu-collapsed-width: 80px;
 // temp variables
 $theme-color: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
 $theme-color2: linear-gradient(-135deg, #899fd4 0%, #a389d4 100%);
-$primary-color: #1e2d6a;;
+$primary-color: #253652;
 $warning-color: #f4c22b;
 $danger-color: #f44236;
-$success-color: #1de9b6;
+// $success-color: #1de9b6;
+$success-color: #357c61;
 $purple-color: #a389d4;
 $info-color: #3ebfea;
 $secondary-color: #748892;
@@ -25,15 +26,15 @@ $theme-border: #eaeaea;
 $white: #fff;
 
 // header
-$brand-background: #1e2d6a;
-$header-dark-background: #1e2d6a;
+$brand-background: #253652;
+$header-dark-background: #253652;
 $header-dark-text-color: #fff;
 $header-light-background: #fff;
-$header-light-text-color: #1e2d6a;
+$header-light-text-color: #253652;
 
 // Menu
 $menu-caption-color: #14171d;
-$menu-dark-background: #1e2d6a;
+$menu-dark-background: #253652;
 $menu-dark-text-color: #a9b7d0;
 $menu-light-background: #fff;
 $menu-light-text-color: #3f4d67;

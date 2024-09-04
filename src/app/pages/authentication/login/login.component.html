@@ -8,34 +8,54 @@
     </div>
     <div class="card">
       <div class="card-body text-center login-card">
-        <div class="mb-4">
-          <!-- <img src="assets/images/logo/veltuff-logo.svg" class="login-logo" /> -->
-          <img src="assets/images/logo/sample-logo.png" class="login-logo" />
-        </div>
-        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="doLogin()" #login="ngForm" novalidate>
+        <form
+          class="login-form"
+          [formGroup]="loginForm"
+          (ngSubmit)="doLogin()"
+          #login="ngForm"
+          novalidate
+        >
+          <div class="text-center">
+            <h3><b>Login</b></h3>
+          </div>
           <hr />
           <div class="input-group">
-            <input type="email" class="form-control" placeholder="Email" formControlName="email" autocomplete="off"
-              title="Email" />
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email"
+              formControlName="email"
+              autocomplete="off"
+              title="Email"
+            />
           </div>
-          @if(login.submitted && loginFormControl?.['email']?.errors?.['required']) {
-          <span class="text-danger error mb-2">
-            Email is required
-          </span>
+          @if (
+            login.submitted && loginFormControl?.["email"]?.errors?.["required"]
+          ) {
+            <span class="text-danger error mb-2"> Email is required </span>
           }
-          @if (login.submitted && loginFormControl?.['email']?.errors?.['email']) {
-          <span class="text-danger error mb-2">
-            Enter a valid email address
-          </span>
+          @if (
+            login.submitted && loginFormControl?.["email"]?.errors?.["email"]
+          ) {
+            <span class="text-danger error mb-2">
+              Enter a valid email address
+            </span>
           }
           <div class="input-group mt-3">
-            <input type="password" class="form-control" placeholder="Password" autocomplete="off" title="Password"
-              formControlName="password" />
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              autocomplete="off"
+              title="Password"
+              formControlName="password"
+            />
           </div>
-          @if(login.submitted && loginFormControl?.['password']?.errors?.['required']) {
-          <span class="text-danger error mb-2">
-            Password is required
-          </span>
+          @if (
+            login.submitted &&
+            loginFormControl?.["password"]?.errors?.["required"]
+          ) {
+            <span class="text-danger error mb-2"> Password is required </span>
           }
 
           <!-- <div class="form-group text-start mt-3">
@@ -45,10 +65,12 @@
             </div>
           </div> -->
 
-          <button type="submit" class="btn btn-primary mt-3 col-12 mb-4">Login</button>
+          <button type="submit" class="btn btn-primary mt-3 col-12 mb-4">
+            Login
+          </button>
         </form>
         <p class="mb-2">
-          Forgot password? <a [routerLink]="['/auth/forgot-password']" class="text-primary">Reset</a>
+          Forgot password? <a [routerLink]="['/auth/forgot-password']">Reset</a>
         </p>
         <!-- <p class="mb-0 text-muted">
           Don’t have an account? <a [routerLink]="['/auth/signup']">Sign up</a>

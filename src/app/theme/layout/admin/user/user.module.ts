@@ -8,7 +8,6 @@ import { UserListComponent } from './user-list/user-list.component';
 import { DataTableModule } from 'src/app/pages/common/data-table/data-table.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-
 @NgModule({
   declarations: [UserMasterComponent, UserListComponent],
   imports: [
@@ -17,7 +16,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     ReactiveFormsModule,
     DataTableModule,
-    NgSelectModule
-  ]
+    NgSelectModule,
+  ],
 })
-export class UserModule { }
+export class UserModule {}

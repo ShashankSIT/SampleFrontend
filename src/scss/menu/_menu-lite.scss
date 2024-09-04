@@ -433,8 +433,7 @@
         border-radius: 0.25rem 0.25rem 0 0;
         padding: 15px;
         position: relative;
-        background: #121212;
-        color: $primary-color;
+        background: $primary-color;
 
         img {
           width: 40px;
@@ -561,7 +560,7 @@
 }
 
 .navbar-brand {
-  background: #121212;
+  background: $primary-color;
 }
 
 .pcoded-header,
@@ -578,7 +577,6 @@
   position: fixed;
   transition: all 0.3s ease-in-out;
   box-shadow: 1px 0 20px 0 rgb(63, 77, 103);
-  
 
   ul {
     padding-left: 0;
@@ -1093,7 +1091,7 @@
       &.pcoded-trigger {
         &:after {
           content: "";
-          background-color: #C7F001;
+          background-color: #ffffff;
           z-index: 1027;
           position: absolute;
           left: 0;
@@ -1103,7 +1101,7 @@
         }
 
         > a {
-          background: darken($menu-dark-background, 60%);
+          background: darken($menu-dark-background, 6%);
           color: $white;
         }
       }
@@ -1164,7 +1162,7 @@
 // ==========================    Responsive Menu  start   ======================
 @media only screen and (max-width: 991px) {
   .pcoded-header {
-    background: #121212;
+    background: $header-dark-background;
     color: $header-dark-text-color;
 
     .input-group-text,

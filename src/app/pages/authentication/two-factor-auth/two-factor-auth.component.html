@@ -1,50 +1,77 @@
 <section id="two-factor-auth">
-    <div class="container-fluid p-2 w-100">
-        <div class="auth-wrapper">
-            <div class="auth-content">
-                <div class="auth-bg">
-                    <span class="r"></span>
-                    <span class="r s"></span>
-                    <span class="r s"></span>
-                    <span class="r"></span>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-1 text-center">
-                            <img src="assets/images/logo/pickfords-logo-blue.svg" class="login-logo" />
-                        </div>
-                        <form class="pt-2" [formGroup]="twoFactorAuthForm" (ngSubmit)="onSubmit()"
-                            #twoFactorAuth="ngForm" novalidate>
-                            <div class="text-center">
-                                <h4><b>Two Factor Authentication</b></h4>
-                            </div>
-                            <hr class="mt-0 w-100">
-                            <div class="row">
-                                <div class="col-12 pt-3">
-                                    <input type="text" class="form-control" placeholder="Two Factor Code"
-                                        formControlName="twoFactorAuthCode" autocomplete="off">
-                                    <span class="text-danger"
-                                        *ngIf="twoFactorAuth.submitted && twoFactorAuthFormControl?.['twoFactorAuthCode'].errors?.['required']">Two
-                                        factor code
-                                        is required</span>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-3 col-12 mb-1">Submit</button>
-                            <div class="row pt-3 pr-0">
-                                <div class="col-md-8 submit-btn">
-                                    <span class="resendCodeMessage text-danger">{{resendCodeMessage}}</span>
-                                </div>
-                                <div class="col-md-4 pr-0">
-                                    <p title="Resend Code" class="resend-code"
-                                        [ngClass]="{'resend-code-disabled' : !isResendEnabled}"
-                                        (click)="ResendAuthCode()">
-                                        Resend Code</p>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+  <div class="container-fluid p-2 w-100">
+    <div class="auth-wrapper">
+      <div class="auth-content">
+        <div class="auth-bg">
+          <span class="r"></span>
+          <span class="r s"></span>
+          <span class="r s"></span>
+          <span class="r"></span>
         </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-1 text-center">
+              <img
+                src="assets/images/logo/pickfords-logo-blue.svg"
+                class="login-logo"
+              />
+            </div>
+            <form
+              class="pt-2"
+              [formGroup]="twoFactorAuthForm"
+              (ngSubmit)="onSubmit()"
+              #twoFactorAuth="ngForm"
+              novalidate
+            >
+              <div class="text-center">
+                <h4><b>Two Factor Authentication</b></h4>
+              </div>
+              <hr class="mt-0 w-100" />
+              <div class="row">
+                <div class="col-12 pt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Two Factor Code"
+                    formControlName="twoFactorAuthCode"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      twoFactorAuth.submitted &&
+                      twoFactorAuthFormControl?.['twoFactorAuthCode'].errors?.[
+                        'required'
+                      ]
+                    "
+                    >Two factor code is required</span
+                  >
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3 col-12 mb-1">
+                Submit
+              </button>
+              <div class="row pt-3 pr-0">
+                <div class="col-md-8 submit-btn">
+                  <span class="resendCodeMessage text-danger">{{
+                    resendCodeMessage
+                  }}</span>
+                </div>
+                <div class="col-md-4 pr-0">
+                  <p
+                    title="Resend Code"
+                    class="resend-code"
+                    [ngClass]="{ 'resend-code-disabled': !isResendEnabled }"
+                    (click)="ResendAuthCode()"
+                  >
+                    Resend Code
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>

@@ -24,17 +24,17 @@ export class canActivate implements CanActivate {
       this.commonService.goToLogin();
       return false;
     } else {
-      var userData = this.storageService.getValue(StorageKey.loginData);
+      const userData = this.storageService.getValue(StorageKey.loginData);
       if (!(this.commonService.role_rights.length > 0)) {
         await this.commonService.getMenuListByRoleId(userData.RoleId);
       }
       //console.log(this.commonService.role_rights);
-      let _url = state.url;
+      const _url = state.url;
       if (_url.includes('edit')) {
-        let parts = _url.split('/edit/');
-        let menuUrl = parts[0];
+        const parts = _url.split('/edit/');
+        const menuUrl = parts[0];
 
-        let data = this.commonService.role_rights.find(
+        const data = this.commonService.role_rights.find(
           (x) => x.MenuUrl === menuUrl,
         );
         if (data.IsEdit) {
@@ -48,10 +48,10 @@ export class canActivate implements CanActivate {
           return false;
         }
       } else if (_url.includes('add')) {
-        let parts = _url.split('/add');
-        let menuUrl = parts[0];
+        const parts = _url.split('/add');
+        const menuUrl = parts[0];
 
-        let data = this.commonService.role_rights.find(
+        const data = this.commonService.role_rights.find(
           (x) => x.MenuUrl === menuUrl,
         );
         if (data.IsAdd) {
@@ -65,7 +65,7 @@ export class canActivate implements CanActivate {
           return false;
         }
       } else {
-        let data = this.commonService.role_rights.find(
+        const data = this.commonService.role_rights.find(
           (x) => x.MenuUrl == _url && x.MenuUrl != '',
         );
         if (data.IsView) {
@@ -73,7 +73,7 @@ export class canActivate implements CanActivate {
         }
       }
 
-      let chk_url = this.commonService.role_rights.filter(
+      const chk_url = this.commonService.role_rights.filter(
         (x) => x.IsView == true && x.menuUrl != '',
       );
       if (chk_url && chk_url.length > 0 && chk_url[0].MenuUrl) {

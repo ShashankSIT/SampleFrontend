@@ -15,14 +15,14 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     AuthSignupComponent,
     ResetPasswordComponent,
     TwoFactorAuthComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
   ],
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

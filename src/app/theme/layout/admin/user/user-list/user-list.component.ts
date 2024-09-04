@@ -79,7 +79,7 @@ export class UserListComponent {
 
   constructor(
     private apiUrl: ApiUrlHelper,
-    private commonService: CommonService, 
+    private commonService: CommonService,
     private router: Router,
   ) {}
 
@@ -88,7 +88,7 @@ export class UserListComponent {
   onAddEdit(data: UserModel) {
     const id = data ? this.commonService.Encrypt(data?.UserId.toString()) : '';
     if (data) {
-      this.router.navigate(['user/edit', id])
+      this.router.navigate(['user/edit', id]);
     } else {
       this.router.navigate(['user/add']);
     }

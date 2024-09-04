@@ -8,19 +8,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    DataListComponent
-  ],
+  declarations: [DataListComponent],
   imports: [
     CommonModule,
     DataTablesModule,
-    MatTableModule, 
+    MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     FormsModule,
   ],
-  exports: [
-    DataListComponent
-  ]
+  exports: [DataListComponent],
 })
-export class DataTableModule { }
+export class DataTableModule {}
