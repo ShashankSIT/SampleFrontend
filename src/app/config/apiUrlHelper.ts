@@ -25,14 +25,14 @@ export class ApiUrlHelper {
     rolerights: {
       getMenuListByRoleId: 'rolerights/GetRoleRightsByRoleId/',
     },
-    user:{
-      saveUser : 'user/SaveUser',
-      getRolesList : 'user/GetRolesList',
-      getUserList : 'user/GetUserList',
-      getUserDropdownList : 'user/GetUserDropdownList',
-      getCompanyDropdownList : 'user/GetCompanyDropdownList',
-      getBranchDropdownList : 'user/GetBranchDropdownList',
-      deleteUser : 'user/deleteUser',
-    }
+    user: {
+      saveUser: 'user/SaveUser',
+      getRolesList: 'user/GetRolesList',
+      getUserList: 'user/GetUserList',
+      getUserDropdownList: 'user/GetUserDropdownList',
+      getCompanyDropdownList: 'user/GetCompanyDropdownList',
+      getBranchDropdownList: 'user/GetBranchDropdownList',
+      deleteUser: 'user/deleteUser',
+    },
   };
 }

@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Router } from "@angular/router";
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Router } from '@angular/router';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 import { SharedService } from '../core/services/shared.service';
@@ -24,10 +29,15 @@ export class HTTPStatus {
 
 @Injectable()
 export class HTTPListener implements HttpInterceptor {
-  constructor(private router: Router, private status: HTTPStatus, private sharedService: SharedService, private commonService: CommonService) { }
+  constructor(
+    private router: Router,
+    private status: HTTPStatus,
+    private sharedService: SharedService,
+    private commonService: CommonService,
+  ) {}
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     //var Spinner = document.getElementById("bootstrapSpinner");
     // if (Spinner) {
@@ -37,10 +47,10 @@ export class HTTPListener implements HttpInterceptor {
       this.sharedService.spinLoader$.next(true);
     }
     return next.handle(req).pipe(
-      map(event => {
+      map((event) => {
         return event;
       }),
-      catchError(error => {
+      catchError((error) => {
         // if (Spinner) {
         //   Spinner.style.display = "none";
         // }
@@ -58,7 +68,7 @@ export class HTTPListener implements HttpInterceptor {
         // }
         this.sharedService.spinLoader$.next(false);
         this.status.setHttpStatus(false);
-      })
+      }),
     );
   }
 }

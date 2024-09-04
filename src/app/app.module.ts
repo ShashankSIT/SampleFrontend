@@ -43,7 +43,7 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
     NavGroupComponent,
     NavItemComponent,
     NavSearchComponent,
-    ToggleFullScreenDirective
+    ToggleFullScreenDirective,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +52,7 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
     BrowserAnimationsModule,
     NgSelectModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [
     NavigationItem,
@@ -61,10 +61,10 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HTTPListener,
-      multi: true
+      multi: true,
     },
     canActivate,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

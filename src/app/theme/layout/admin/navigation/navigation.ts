@@ -28,7 +28,7 @@ const NavigationItems = [
     type: 'item',
     url: '/user',
     icon: 'feather icon-user',
-    classes: 'nav-item'
+    classes: 'nav-item',
   },
 ];
 

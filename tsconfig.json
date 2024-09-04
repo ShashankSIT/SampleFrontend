@@ -22,7 +22,7 @@
     "module": "ES2022",
     "lib": [
       "ES2022", // this will auto target to latest by angular cli
-      "dom",
+      "dom"
     ],
     "types": ["node"],
     "typeRoots": ["node_modules/@types"]
@@ -31,6 +31,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-  },
+    "strictTemplates": true
+  }
 }

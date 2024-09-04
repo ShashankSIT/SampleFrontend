@@ -7,16 +7,15 @@ import { CommonService } from 'src/app/core/services/common.service';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss'
+  styleUrl: './forgot-password.component.scss',
 })
 export class ForgotPasswordComponent {
-
   forgotPasswordForm: FormGroup = this.formBuilder.group({});
   constructor(
     private commonService: CommonService,
     private formBuilder: FormBuilder,
-    private apiUrl: ApiUrlHelper
-  ) { }
+    private apiUrl: ApiUrlHelper,
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -24,7 +23,7 @@ export class ForgotPasswordComponent {
 
   initForm() {
     this.forgotPasswordForm = this.formBuilder.group({
-      email: ['', [Validators.required]]
+      email: ['', [Validators.required]],
     });
   }
 
@@ -38,26 +37,36 @@ export class ForgotPasswordComponent {
     }
     const apiUrl = this.apiUrl.apiUrl.login.forgotPassword;
     const obj = {
-      Email: this.forgotPasswordForm.value.email
+      Email: this.forgotPasswordForm.value.email,
     };
-    this.commonService.doPost(apiUrl, obj).pipe().subscribe({
-      next: (data) => {
-        if (data && data.Success) {
-          this.commonService.showNotification('Forgot Password', data.Message, NotificationType.SUCCESS);
-        }
-        else {
-          this.commonService.showNotification('Forgot Password', data.Message, NotificationType.ERROR);
-        }
-      },
-      error: (er) => {
-        console.error(er);
-        return;
-      },
-      complete: () => {
-        console.info('complete');
-        return;
-      }
-    });
+    this.commonService
+      .doPost(apiUrl, obj)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.commonService.showNotification(
+              'Forgot Password',
+              data.Message,
+              NotificationType.SUCCESS,
+            );
+          } else {
+            this.commonService.showNotification(
+              'Forgot Password',
+              data.Message,
+              NotificationType.ERROR,
+            );
+          }
+        },
+        error: (er) => {
+          console.error(er);
+          return;
+        },
+        complete: () => {
+          console.info('complete');
+          return;
+        },
+      });
 
     return true;
   }

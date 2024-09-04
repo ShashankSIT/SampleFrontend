@@ -8,10 +8,9 @@ describe('UserMasterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserMasterComponent]
-    })
-    .compileComponents();
-    
+      declarations: [UserMasterComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(UserMasterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

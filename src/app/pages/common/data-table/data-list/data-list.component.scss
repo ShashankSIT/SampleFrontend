@@ -1,10 +1,10 @@
-@import '/src/scss/variables.scss';
+@import "/src/scss/variables.scss";
 
 table {
   width: 100%;
 }
 .table-header {
-  background: $primary-color;  
+  background: $primary-color;
 }
 .table-header th {
   color: $white;
@@ -16,22 +16,21 @@ table {
 //   margin-bottom: 10px;
 //   font-size: 16px;
 //   border: 1px solid #ccc;
-//   border-radius: 5px; 
+//   border-radius: 5px;
 //   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 // }
 
 // Mat Table
 
-::ng-deep .mat-mdc-paginator .mat-mdc-select{
+::ng-deep .mat-mdc-paginator .mat-mdc-select {
   padding: 10px;
 }
-::ng-deep .mat-mdc-select-panel-above div.mat-mdc-select-panel{
+::ng-deep .mat-mdc-select-panel-above div.mat-mdc-select-panel {
   background-color: #fff;
 }
-::ng-deep .mdc-notched-outline__leading, 
-::ng-deep .mdc-notched-outline__notch, 
-::ng-deep .mdc-notched-outline__trailing{
-  border:1px solid #ddd!important;
-  border-left: 0px!important;
- 
+::ng-deep .mdc-notched-outline__leading,
+::ng-deep .mdc-notched-outline__notch,
+::ng-deep .mdc-notched-outline__trailing {
+  border: 1px solid #ddd !important;
+  border-left: 0px !important;
 }

@@ -1,9 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 /*Material CSS*/
 
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @include mat.core();
 
 /*End Material CSS*/
@@ -31,44 +30,44 @@
 
 @import "scss/plugins/plugins";
 @import "scss/custom";
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
 body {
-    font-family: "Titillium Web", sans-serif;
+  font-family: "Titillium Web", sans-serif;
 }
 
 .float-right {
-    float: right;
+  float: right;
 }
 
 span .feather {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .btn-cancel {
+  background-color: #fc6180;
+  border-color: #fc6180;
+  color: #fff;
+  &:hover {
     background-color: #fc6180;
     border-color: #fc6180;
     color: #fff;
-    &:hover {
-        background-color: #fc6180;
-        border-color: #fc6180;
-        color: #fff;
-    }
+  }
 }
 
 form label {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .custom-selectbox.ng-select .ng-select-container {
-    border-radius: 6px;
-    height: 42.8px !important;
-    border-color: #dee2e6 !important;
+  border-radius: 6px;
+  height: 42.8px !important;
+  border-color: #dee2e6 !important;
 }
 
 .custom-selectbox.ng-select .ng-select-container .ng-value-container {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 .w-25 {
-    width: 25%;
+  width: 25%;
 }

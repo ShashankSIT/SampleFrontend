@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       return false;
     }
     const apiUrl = this.apiUrl.apiUrl.login.loginUser;
-    let objData = {
+    const objData = {
       Email: this.loginForm.value.email,
       Password: this.loginForm.value.password,
     };
