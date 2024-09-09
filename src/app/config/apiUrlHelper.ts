@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { profile } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,7 @@ export class ApiUrlHelper {
       getCompanyDropdownList: 'user/GetCompanyDropdownList',
       getBranchDropdownList: 'user/GetBranchDropdownList',
       deleteUser: 'user/deleteUser',
+      getLanguageList : 'user/GetLanguageList'
     },
   };
 }

@@ -28,6 +28,7 @@ import { canActivate } from './auth-gaurd/auth.guard';
 import { ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
 
+
 const RxJS_Services = [HTTPListener, HTTPStatus];
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ const RxJS_Services = [HTTPListener, HTTPStatus];
     NavItemComponent,
     NavSearchComponent,
     ToggleFullScreenDirective,
+
   ],
   imports: [
     BrowserModule,

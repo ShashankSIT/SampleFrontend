@@ -55,3 +55,8 @@ export interface ActionEvent {
   Type: string;
   Data: any;
 }
+
+export interface LanguageModel {
+  Id : Number,
+  Language : string
+}
