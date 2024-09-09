@@ -12,7 +12,14 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
-  }
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./user-ag-grid/user-ag-grid.module').then(
+        (m) => m.UserAgGridModule,
+      ),
+  },
 ];
 
 @NgModule({

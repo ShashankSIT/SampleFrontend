@@ -22,6 +22,7 @@ export class UserMasterComponent implements OnInit {
     SortOrder: '',
     StrSearch: '',
   };
+  isLoading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,9 +37,12 @@ export class UserMasterComponent implements OnInit {
     this.getRoleList();
 
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
+      const id = decodeURIComponent(params.get('id'));
       if (id) {
         this.userId = +this.commonService.Decrypt(id); // Convert id to a number
+        if (this.userId > 0) {
+          this.isLoading = true;
+        }
       }
     });
 
@@ -106,16 +110,17 @@ export class UserMasterComponent implements OnInit {
               phoneNo: user.PhoneNo || '', // Handle null case
               roleId: user.RoleId,
             });
+            this.isLoading = false;
           }
         },
         error: (err) => {
           console.error(err);
+          this.isLoading = false;
         },
       });
   }
 
   onSubmit() {
-    debugger;
     if (!this.userForm.valid) {
       return false;
     }

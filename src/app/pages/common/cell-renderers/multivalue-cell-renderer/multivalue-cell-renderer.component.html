@@ -1,0 +1,13 @@
+<ng-container>
+  <div class="d-flex">
+    <div *ngFor="let item of params; let i = index">
+      <div class="category-box" *ngIf="i < 2">
+        {{ item }}
+      </div>
+    </div>
+    <div *ngIf="params.length > 2">
+      + {{ params.length - 2 }} {{ "GENERAL.MORE.TEXT" | translate }}
+    </div>
+  </div>
+</ng-container>
+<div *ngIf="params.length < 1">-</div>

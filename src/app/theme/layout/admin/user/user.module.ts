@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserListComponent } from './user-list/user-list.component';
 import { DataTableModule } from 'src/app/pages/common/data-table/data-table.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CommonComponentModule } from 'src/app/pages/common/common.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LanguageListComponent } from './user-profile/language-list/language-list.component';
 
@@ -19,6 +20,7 @@ import { LanguageListComponent } from './user-profile/language-list/language-lis
     ReactiveFormsModule,
     DataTableModule,
     NgSelectModule,
+    CommonComponentModule,
   ],
 })
 export class UserModule {}

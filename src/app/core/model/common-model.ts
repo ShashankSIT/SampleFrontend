@@ -24,6 +24,14 @@ export interface PaginationModel {
   StrSearch: string;
   SortColumn: string;
   SortOrder: string;
+  ColumnFilters?: IColumnFilter[];
+}
+
+export interface IColumnFilter {
+  [key: string]: {
+    $regex: string;
+    $options: string;
+  };
 }
 
 export interface ButtonsConfig {

@@ -6,6 +6,7 @@ body {
     font-family: "Open Sans", sans-serif;
   }
 }
+
 header {
   width: 100%;
 }
@@ -54,6 +55,7 @@ pre code {
   z-index: 9;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
+
   .btn {
     margin-bottom: 0;
     margin-right: 0;
@@ -63,4 +65,58 @@ pre code {
 .fixed-button.active {
   bottom: 50px;
   opacity: 1;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-bg-type: #cdd8e2;
+}
+
+.bg-primary {
+  background-color: $primary-color !important;
+}
+
+.ag-header,
+.ag-advanced-filter-header,
+.ag-column-resizing,
+.ag-header-cell-moving {
+  background-color: $primary-color !important;
+}
+
+.ag-header :hover,
+.ag-advanced-filter-header :hover,
+.ag-header-cell-moving:hover {
+  background-color: $primary-color-hover !important;
+}
+
+.ag-header-cell-label {
+  color: $light-color !important;
+}
+
+.ag-theme-material .ag-header-icon {
+  color: $light-color !important;
+  /* Change the color of the filter icon */
+}
+
+.ag-picker-field.ag-labeled.ag-label-align-left.ag-select.ag-filter-select.ag-disabled {
+  display: none;
+}
+
+.pinned-cell {
+  border-left: 2px solid #3498db !important;
+  /* Adjust the color and width of the border */
+}
+
+a.page-link {
+  color: $primary-color;
+  background: $light-color;
+}
+
+.page-link.disabled,
+.disabled > .page-link {
+  background-color: #cdd8e2 !important;
+  color: #60728e4a !important;
+}
+
+.skeleton-loader.progress {
+  background-color: #cdd8e2 !important;
 }

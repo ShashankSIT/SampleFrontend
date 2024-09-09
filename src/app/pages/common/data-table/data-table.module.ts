@@ -6,17 +6,26 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { FormsModule } from '@angular/forms';
+import { DatatableComponent } from './datatable/datatable.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CommonComponentModule } from '../common.module';
 
 @NgModule({
-  declarations: [DataListComponent],
+  declarations: [DataListComponent, DatatableComponent],
   imports: [
     CommonModule,
     DataTablesModule,
     MatTableModule,
+    AgGridModule,
+    NgbPaginationModule,
+    NgSelectModule,
     MatPaginatorModule,
     MatSortModule,
     FormsModule,
+    CommonComponentModule,
   ],
-  exports: [DataListComponent],
+  exports: [DataListComponent, DatatableComponent],
 })
 export class DataTableModule {}

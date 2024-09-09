@@ -1,0 +1,73 @@
+.perPageDatatable {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  .hidebuttonName {
+    margin-left: 5px;
+  }
+  .dateRangeSelector {
+    max-width: 250px;
+  }
+}
+:host ::ng-deep ngb-pagination {
+  .pagination {
+    margin-block: auto !important;
+  }
+}
+::ng-deep .ng-dropdown-panel {
+  margin-right: -5px !important;
+}
+.border-r-none {
+  border-right: none;
+}
+.card-body {
+  padding: 10px !important;
+}
+.card {
+  margin-bottom: 0px !important;
+}
+::ng-deep.noeditableCells {
+  border: none !important;
+  &:focus {
+    border: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .hidebuttonName {
+    display: none !important;
+  }
+}
+::ng-deep .ag-theme-material .ag-checkbox-input-wrapper.ag-checked::after {
+  color: rgb(95, 208, 243) !important;
+}
+::ng-deep .ag-horizontal-right-spacer {
+  overflow: visible !important;
+}
+::ng-deep .ag-horizontal-left-spacer {
+  overflow: visible !important;
+}
+::ng-deep .ag-body-viewport::-webkit-scrollbar,
+.ag-center-cols-viewport::-webkit-scrollbar {
+  display: block;
+}
+
+::ng-deep .ag-body-horizontal-scroll-viewport {
+  height: 30px !important;
+  &::-webkit-scrollbar-thumb {
+    background-color: gainsboro !important;
+    border-radius: 5px !important;
+  }
+  &::-webkit-scrollbar {
+    width: 0.2em !important;
+    height: 10px !important;
+  }
+}
+
+::ng-deep svg.feather.feather-plus {
+  padding-bottom: 5px !important;
+  padding-right: 5px !important;
+}
+// ::ng-deep .ag-body-viewport.ag-layout-auto-height.ag-row-animation {
+//   height: 100px !important;
+// }

@@ -1,0 +1,13 @@
+.card {
+  background-color: white;
+  color: black;
+}
+
+:host ::ng-deep .btn > i {
+  margin: 0 !important;
+}
+
+:host ::ng-deep .dynamic-form-cards {
+  max-height: 400px !important;
+  overflow: auto !important;
+}
