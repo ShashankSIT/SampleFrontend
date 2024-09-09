@@ -1,0 +1,44 @@
+<div
+  *ngIf="displayValue.backgroundImg"
+  class="avatar-container"
+  [ngStyle]="{
+    'background-image':
+      'url(' + environment.imageUrl + displayValue.backgroundImg + ')'
+  }"
+>
+  <!-- Rest of the content -->
+  <div class="content-wrapper">
+    <div>
+      <img
+        [src]="environment.imageUrl + displayValue.bannerImg"
+        alt=""
+        class="avatar-banner"
+        (error)="showDefault($event)"
+      />
+    </div>
+    <div class="banner-text">
+      <p>{{ displayValue.bannerText }}</p>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+      <div
+        class="strip"
+        [ngStyle]="{
+          color: displayValue.stripTextColor,
+          'background-color': displayValue.stripBackgroundColor
+        }"
+      >
+        <div class="stripeText">{{ displayValue.stripText }}</div>
+        <div>
+          <img
+            class="stripIcon"
+            [src]="environment.imageUrl + displayValue.stripIcon"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!displayValue.backgroundImg">
+  <img src="/assets/images/logo/main_logo_sm.png" class="img-fluid" alt="" />
+</div>

@@ -180,7 +180,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.2", "@angular/common@^17.3.2", "@angular/common@^18.0.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@17.3.10":
+"@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.2", "@angular/common@^17.3.2", "@angular/common@^18.0.0", "@angular/common@>= 12.0.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@17.3.10":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.3.10.tgz"
   integrity sha512-6SfD21M3LujymmZsZQIxAsV8Bj5u6He6ImZ+p2rr7FAhFxpVJyKldK8LCmJcFsBD4srpQcxEZ0iDxXvg+0ihAw==
@@ -208,7 +208,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.2", "@angular/core@^17.3.2", "@angular/core@^18.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@17.3.10":
+"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.2", "@angular/core@^17.3.2", "@angular/core@^18.0.0", "@angular/core@>= 12.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@17.3.10":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.3.10.tgz"
   integrity sha512-ocEKu7X0yFCOvgJn1uZy76qjhsjKvULrO1k/BuIX0nwhp61DTGYTvCqKmwCBLM8/gvcKYH5vMKMHoQKtiSGE0A==
@@ -2918,6 +2918,18 @@ adjust-sourcemap-loader@^4.0.0:
   dependencies:
     loader-utils "^2.0.0"
     regex-parser "^2.2.11"
+
+ag-grid-angular@^30.1.0:
+  version "30.1.0"
+  resolved "https://registry.npmjs.org/ag-grid-angular/-/ag-grid-angular-30.1.0.tgz"
+  integrity sha512-Fslijnu6S5wQ8HsW3WfMG9A52qPL1s1X+59wiEp+8yHk9c0Y1Vh0r3uPIFA7ukicLqBM6y1XJeaLfL8TH1DoMw==
+  dependencies:
+    tslib "^2.3.0"
+
+ag-grid-community@^30.1.0, ag-grid-community@~30.1.0:
+  version "30.1.0"
+  resolved "https://registry.npmjs.org/ag-grid-community/-/ag-grid-community-30.1.0.tgz"
+  integrity sha512-D69e63CUALxfgLZSu1rXC8Xiyhu6+17zxzTV8cWsyvt5GeSDv2frQ3BKOqGZbUfVoOCLv2SQoHVTTqw8OjxavA==
 
 agent-base@^7.0.2, agent-base@^7.1.0, agent-base@^7.1.1:
   version "7.1.1"
@@ -5758,6 +5770,13 @@ ngx-scrollbar@^13.0.3:
   integrity sha512-ZpjNm9y7F5OSQh7p4x2PrwRkNl5zARPqPbRdkS5HjP8lHpG7hAFpbsjW+WlsM/6lAL5pesfVRCSlvcRJihM2sg==
   dependencies:
     tslib "^2.3.1"
+
+ngx-skeleton-loader@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npmjs.org/ngx-skeleton-loader/-/ngx-skeleton-loader-8.1.0.tgz"
+  integrity sha512-Ap/QSjadv/Kl0Vj7BiIWLG0JZZlo0eCJhdIVJ3Ryz7R0c4BR2Eq3O01du3ftf0SDbwt5vt7342NyqhLNrQ08RA==
+  dependencies:
+    tslib "^2.0.0"
 
 ngx-toastr@^18.0.0:
   version "18.0.0"

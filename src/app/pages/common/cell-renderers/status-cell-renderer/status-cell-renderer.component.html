@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col text-capitalize">
+    <h5
+      class="m-0 badge py-2 statusFont"
+      [ngClass]="{
+        'badge-soft-warning': _value === 'Pending' || _value === 'In Progress',
+        'badge-soft-success':
+          _value === 'approved' ||
+          _value === 'USERS.USERGRID.APPROVEADSVALUE.YES.TEXT' ||
+          _value === true ||
+          _value === 'Active' ||
+          _value === 'New' ||
+          _value === 'active' ||
+          _value === 'Yes',
+        'badge-soft-danger':
+          _value === 'deny' ||
+          _value === 'USERS.USERGRID.APPROVEADSVALUE.NO.TEXT' ||
+          _value === false ||
+          _value === 'No Active' ||
+          _value === 'Canceled' ||
+          _value === 'Rejected' ||
+          _value === 'Closed' ||
+          _value === 'inactive' ||
+          _value === 'No'
+      }"
+    >
+      {{ _value | translate }}
+    </h5>
+  </div>
+</div>

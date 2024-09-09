@@ -23,10 +23,18 @@ export interface Navigation extends NavigationItem {
 
 const NavigationItems = [
   {
-    id: 'user',
+    id: 'user-mat-table',
     title: 'User-Mat Table',
     type: 'item',
-    url: '/user',
+    url: '/user/mat-table',
+    icon: 'feather icon-user',
+    classes: 'nav-item',
+  },
+  {
+    id: 'user-ag-grid',
+    title: 'User-AG Grid',
+    type: 'item',
+    url: '/user/ag-grid',
     icon: 'feather icon-user',
     classes: 'nav-item',
   },

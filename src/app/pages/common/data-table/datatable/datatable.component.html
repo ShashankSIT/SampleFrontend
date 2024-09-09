@@ -1,0 +1,205 @@
+<div class="row">
+  <div class="col-sm-12 col-xl-10 col-md-12 my-2">
+    <div class="perPageDatatable">
+      <!-- Pagination (Top) -->
+      <ng-container
+        *ngIf="
+          (paginationPosition === 'top' || paginationPosition === 'both') &&
+          isPaginationEnable
+        "
+      >
+        <ng-container *ngTemplateOutlet="pagination"></ng-container>
+      </ng-container>
+
+      <!-- Reset Filters Button -->
+      <ng-container *ngIf="resetFilters">
+        <button
+          (click)="onResetFilters()"
+          type="button"
+          class="btn btn-warning"
+        >
+          <i class="fas fa-redo"></i>
+          <span class="hidebuttonName">Reset</span>
+        </button>
+      </ng-container>
+
+      <!-- Print Button -->
+      <ng-container *ngIf="isPrintEnable">
+        <button
+          (click)="onBtnPrint()"
+          type="button"
+          class="btn btn-soft-primary"
+        >
+          <i class="fas fa-print"></i>
+          <span class="hidebuttonName">Print</span>
+        </button>
+      </ng-container>
+
+      <!-- Export Button -->
+      <ng-container *ngIf="isExportable">
+        <button
+          (click)="onBtnExport()"
+          type="button"
+          class="btn btn-soft-purple"
+        >
+          <i class="fas fa-file-export"></i>
+          <span class="hidebuttonName">Export</span>
+        </button>
+      </ng-container>
+
+      <!-- Delete Selected Products Button -->
+      <ng-container *ngIf="isDeletable">
+        <button
+          (click)="getSelectedRowsData()"
+          type="button"
+          class="btn btn-danger"
+        >
+          <i class="fas fa-trash-alt"></i>
+          <span class="hidebuttonName">Delete Selected Products</span>
+        </button>
+      </ng-container>
+
+      <!-- Delete All Products Button -->
+      <ng-container *ngIf="isDeleteAll">
+        <button (click)="deleteAllData()" type="button" class="btn btn-danger">
+          <i class="fas fa-trash-alt"></i>
+          <span class="hidebuttonName">Delete All Products</span>
+        </button>
+      </ng-container>
+
+      <!-- Additional Top Buttons -->
+      <ng-content select="[topButtons]"></ng-content>
+
+      <!-- Add Product Button -->
+      <ng-container *ngIf="isAddProduct">
+        <button
+          (click)="getSelectedRowsData()"
+          [disabled]="numberOfSelectedRows === 0"
+          type="button"
+          class="btn btn-primary"
+        >
+          <span class="hidebuttonName">Add Selected Product</span>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Search Input -->
+  <ng-container *ngIf="isSearchable">
+    <div class="col-sm-12 col-xl-2 col-md-12 d-flex my-2">
+      <div class="input-group my-auto">
+        <div class="input-group-text bg-primary text-white border-r-none">
+          <i class="fas fa-search"></i>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search"
+          [(ngModel)]="queryParams"
+          (ngModelChange)="queryParamsSubject.next(queryParams)"
+        />
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Data Grid -->
+  <div class="col-12 mt-2" *ngIf="showGrid" #grid>
+    <app-common-loading
+      [count]="perPage > 0 ? perPage : 10"
+      [appearance]="'line'"
+      [isLoading]="isLoading"
+    >
+      <ag-grid-angular
+        [gridOptions]="gridOptions"
+        id="commonGrid"
+        domLayout="autoHeight"
+        class="ag-theme-material"
+        [rowData]="rowData"
+        [pagination]="isPaginationEnable"
+        [suppressPaginationPanel]="true"
+        [paginationPageSize]="perPage"
+        [defaultColDef]="defaultColDef"
+        [animateRows]="true"
+        [rowDragManaged]="true"
+        (rowDragEnd)="onRowDragEnd($event)"
+        [suppressRowClickSelection]="true"
+        [rowGroupPanelShow]="rowGroupPanelShow"
+        [columnDefs]="columnDefs"
+        (sortChanged)="onSortChange($event)"
+        (dragStopped)="onColumnOrderChange()"
+        (filterChanged)="onfilterChange($event)"
+        (gridReady)="onGridReady($event)"
+        [suppressExcelExport]="true"
+        [rowSelection]="rowSelection"
+        [loadingOverlayComponentParams]="{
+          gridCount: perPage > 3 ? perPage : 3
+        }"
+        [suppressDragLeaveHidesColumns]="true"
+        [overlayNoRowsTemplate]="'No Record Found'"
+        (selectionChanged)="onSelectionChange()"
+      >
+      </ag-grid-angular>
+    </app-common-loading>
+  </div>
+
+  <!-- Pagination (Bottom) -->
+  <div
+    class="col-12"
+    *ngIf="
+      (paginationPosition === 'bottom' || paginationPosition === 'both') &&
+      isPaginationEnable
+    "
+  >
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+  </div>
+</div>
+<!-- Pagination Template -->
+<ng-template #pagination>
+  <div class="card">
+    <div class="card-body">
+      <div class="my-auto pagination-rounded perPageDatatable">
+        <ngb-pagination
+          [collectionSize]="collectionSize"
+          [(page)]="currentPage"
+          [maxSize]="6"
+          [pageSize]="perPage"
+          [rotate]="true"
+          [ellipses]="true"
+          [boundaryLinks]="true"
+          (pageChange)="onPageClick($event)"
+        ></ngb-pagination>
+        <h6 class="my-auto">Per Page</h6>
+        <ng-select
+          style="min-width: 100px"
+          [items]="pageSizeOptions"
+          [(ngModel)]="perPage"
+          (change)="onPageSizeChanged()"
+          [searchable]="false"
+          [clearable]="false"
+          [appendTo]="'body'"
+          bindLabel="pageSize"
+          bindValue="value"
+        >
+        </ng-select>
+        <div class="ms-auto">
+          <h6 class="my-auto text-muted">
+            <span class="mx-1">
+              {{ currentPage === 1 ? 1 : (currentPage - 1) * perPage + 1 }}
+            </span>
+            to
+            <span class="mx-1">
+              {{
+                currentPage === 1
+                  ? rowData?.length < perPage
+                    ? rowData?.length
+                    : perPage
+                  : (currentPage - 1) * perPage + rowData?.length
+              }}
+            </span>
+            of {{ collectionSize }}
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -44,7 +44,7 @@ export class HTTPListener implements HttpInterceptor {
     //   Spinner.style.display = "block";
     // }
     if (!this.commonService.byPassLoader(req.url)) {
-      this.sharedService.spinLoader$.next(true);
+      this.sharedService.spinLoader$.next(false); //Will Disable Loader throughout the application
     }
     return next.handle(req).pipe(
       map((event) => {

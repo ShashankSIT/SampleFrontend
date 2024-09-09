@@ -1,0 +1,11 @@
+<ngx-skeleton-loader
+  *ngIf="isLoading"
+  [count]="count"
+  appearance="line"
+  [theme]="{
+    'border-radius': '5px',
+    height: '45.89px',
+    'margin-bottom': '0px'
+  }"
+></ngx-skeleton-loader>
+<ng-content *ngIf="!isLoading"></ng-content>

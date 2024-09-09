@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-2">
+    <div>
+      <img
+        *ngIf="shape === 'circle'"
+        [src]="environment.imageUrl + displayValue"
+        alt=""
+        class="rounded-circle avatar-sm"
+        (error)="showDefault($event)"
+      />
+      <img
+        *ngIf="shape === 'square'"
+        [src]="environment.imageUrl + displayValue"
+        alt=""
+        [ngClass]="size"
+        (error)="showDefault($event)"
+      />
+      <!-- <p class="mt-2 mb-lg-0"><code>.avatar-sm</code></p> -->
+    </div>
+  </div>
+</div>

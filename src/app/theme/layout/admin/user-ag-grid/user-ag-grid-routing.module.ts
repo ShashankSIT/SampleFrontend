@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserMasterComponent } from './user-master/user-master.component';
+import { UserListAgComponent } from './user-list-ag/user-list-ag.component';
 import { canActivate } from 'src/app/auth-gaurd/auth.guard';
-import { UserListComponent } from './user-list/user-list.component';
+import { UserMasterComponent } from '../user/user-master/user-master.component';
 
 const routes: Routes = [
   {
-    path: 'mat-table',
-    component: UserListComponent,
+    path: 'ag-grid',
+    component: UserListAgComponent,
     canActivate: [canActivate],
   },
   {
@@ -26,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UserRoutingModule {}
+export class UserAgGridRoutingModule {}

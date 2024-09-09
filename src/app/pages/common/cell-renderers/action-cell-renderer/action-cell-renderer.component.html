@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col">
+    <span *ngIf="showEditButton">
+      <a
+        title="Edit"
+        *ngIf="!editWithModal"
+        class="btn btn-xs btn-outline-primary mx-1 px-2 py-1"
+        (click)="onEdit(displayValue.data)"
+      >
+        <i class="material-icons">edit</i>
+      </a>
+      <a
+        title="Edit"
+        *ngIf="editWithModal"
+        class="btn btn-xs btn-outline-primary mx-1 px-2 py-1"
+        (click)="onActionClick('edit', displayValue.data.Id, '')"
+      >
+        <i class="material-icons">edit</i>
+      </a>
+    </span>
+    <button
+      title="Delete"
+      *ngIf="showDeleteButton"
+      class="btn btn-xs btn-outline-danger mx-1 px-2 py-1"
+      (click)="onActionClick('delete', displayValue.data.Id, displayValue)"
+    >
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
+</div>
