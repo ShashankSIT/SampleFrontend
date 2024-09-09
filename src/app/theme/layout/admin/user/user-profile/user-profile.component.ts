@@ -7,9 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent implements OnInit {
-  constructor(
-
-  ) {}
+  constructor() {}
 
   userProfileForm: FormGroup;
   photoUrl: string =
@@ -17,8 +15,7 @@ export class UserProfileComponent implements OnInit {
   profileHave: boolean = false;
   isEdit: boolean = false;
   formStatus: string;
-  
-  
+
   userProfileData: any = {
     firstName: 'First Name Test',
     lastName: 'Last Name Test',
@@ -30,8 +27,6 @@ export class UserProfileComponent implements OnInit {
   };
 
   ngOnInit() {
-    
-
     this.userProfileForm = new FormGroup({
       firstName: new FormControl(null, [
         Validators.required,
@@ -50,7 +45,6 @@ export class UserProfileComponent implements OnInit {
       dob: new FormControl(null, [Validators.required]),
       address: new FormControl(null, [Validators.required]),
     });
-
   }
 
   get userFormControl() {
@@ -124,6 +118,4 @@ export class UserProfileComponent implements OnInit {
       address: this.userProfileData.address,
     });
   }
-
-  
 }

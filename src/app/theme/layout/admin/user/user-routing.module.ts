@@ -22,10 +22,10 @@ const routes: Routes = [
     canActivate: [canActivate],
   },
   {
-    path : 'profile',
-    component : UserProfileComponent,
+    path: 'profile',
+    component: UserProfileComponent,
     canActivate: [canActivate],
-  }
+  },
 ];
 
 @NgModule({

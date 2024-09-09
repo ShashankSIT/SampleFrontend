@@ -6,24 +6,21 @@ import { CommonService } from 'src/app/core/services/common.service';
 @Component({
   selector: 'app-language-list',
   templateUrl: './language-list.component.html',
-  styleUrl: './language-list.component.scss'
+  styleUrl: './language-list.component.scss',
 })
-export class LanguageListComponent implements OnInit{
-
-  languges : Array<LanguageModel> = []
+export class LanguageListComponent implements OnInit {
+  languges: Array<LanguageModel> = [];
   public settings = {};
 
   constructor(
     private commonService: CommonService,
     private apiUrl: ApiUrlHelper,
-  ){
-
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.getLanguageList()
+    this.getLanguageList();
 
-    console.log(this.languges)
+    console.log(this.languges);
 
     this.settings = {
       singleSelection: false,
@@ -42,26 +39,22 @@ export class LanguageListComponent implements OnInit{
       showSelectedItemsAtTop: false,
       defaultOpen: false,
     };
-
   }
 
-
-  getLanguageList(){
+  getLanguageList() {
     const apiUrl = this.apiUrl.apiUrl.user.getLanguageList;
     this.commonService
       .doGet(apiUrl)
       .pipe()
       .subscribe({
-        next : (data) => {
-          if(data && data.Success){
-           this.languges =  data?.Data ?? []
+        next: (data) => {
+          if (data && data.Success) {
+            this.languges = data?.Data ?? [];
           }
         },
-        error : (err) => {
-          console.error(err)
-        }
-      })
+        error: (err) => {
+          console.error(err);
+        },
+      });
   }
-
-
 }

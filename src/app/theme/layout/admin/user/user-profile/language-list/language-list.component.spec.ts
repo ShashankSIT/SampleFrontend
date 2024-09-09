@@ -8,10 +8,9 @@ describe('LanguageListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LanguageListComponent]
-    })
-    .compileComponents();
-    
+      declarations: [LanguageListComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LanguageListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

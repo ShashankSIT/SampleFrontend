@@ -65,6 +65,6 @@ export interface ActionEvent {
 }
 
 export interface LanguageModel {
-  Id : Number,
-  Language : string
+  Id: Number;
+  Language: string;
 }

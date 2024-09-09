@@ -12,7 +12,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LanguageListComponent } from './user-profile/language-list/language-list.component';
 
 @NgModule({
-  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent, LanguageListComponent],
+  declarations: [
+    UserMasterComponent,
+    UserListComponent,
+    UserProfileComponent,
+    LanguageListComponent,
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,

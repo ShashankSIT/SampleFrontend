@@ -34,7 +34,7 @@ export class ApiUrlHelper {
       getCompanyDropdownList: 'user/GetCompanyDropdownList',
       getBranchDropdownList: 'user/GetBranchDropdownList',
       deleteUser: 'user/deleteUser',
-      getLanguageList : 'user/GetLanguageList'
+      getLanguageList: 'user/GetLanguageList',
     },
   };
 }
