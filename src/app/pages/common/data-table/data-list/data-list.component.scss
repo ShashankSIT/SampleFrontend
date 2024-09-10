@@ -5,6 +5,8 @@ table {
 }
 .table-header {
   background: $primary-color;
+  position: sticky;
+  top: 0;
 }
 .table-header th {
   color: $white;
@@ -25,9 +27,11 @@ table {
 ::ng-deep .mat-mdc-paginator .mat-mdc-select {
   padding: 10px;
 }
+
 ::ng-deep .mat-mdc-select-panel-above div.mat-mdc-select-panel {
   background-color: #fff;
 }
+
 ::ng-deep .mdc-notched-outline__leading,
 ::ng-deep .mdc-notched-outline__notch,
 ::ng-deep .mdc-notched-outline__trailing {
