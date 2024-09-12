@@ -37,12 +37,8 @@
 
       <!-- Export Button -->
       <ng-container *ngIf="isExportable">
-        <button
-          (click)="onBtnExport()"
-          type="button"
-          class="btn btn-soft-purple"
-        >
-          <i class="fas fa-file-export"></i>
+        <button (click)="onBtnExport()" type="button" class="btn btn-purple">
+          <i class="fas fa-file-upload"></i>
           <span class="hidebuttonName">Export</span>
         </button>
       </ng-container>

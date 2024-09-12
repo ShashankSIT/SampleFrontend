@@ -11,7 +11,11 @@ import {
   IColumnFilter,
   PaginationModel,
 } from 'src/app/core/model/common-model';
-import { IUserList, UserModel } from 'src/app/core/model/user-model';
+import {
+  IUserExport,
+  IUserList,
+  UserModel,
+} from 'src/app/core/model/user-model';
 import { CommonService } from 'src/app/core/services/common.service';
 import { ActionCellRendererComponent } from 'src/app/pages/common/cell-renderers/action-cell-renderer/action-cell-renderer.component';
 import Swal from 'sweetalert2';
@@ -184,17 +188,78 @@ export class UserListAgComponent implements OnInit {
     this.getAllUsers(this.filterParams);
   }
 
-  // onDeleteClick(data: string) {
-  //   this.commonService.deleteWriters(data).subscribe({
-  //     next: () => {
-  //       this._toast.success(WRITERS.deleteSuccess);
-  //       this.getAllWriters(this.filterParams);
-  //     },
-  //     error: () => {
-  //       this._toast.error(WRITERS.deleteError);
-  //     },
-  //   });
-  // }
+  exportList(type: string): void {
+    const params: PaginationModel = {
+      ...this.filterParams,
+      PageSize: this.collectionSize,
+      PageNumber: 1,
+    };
+
+    Swal.fire({
+      title: 'Export Data',
+      text: 'How would you like to export the data?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Angular',
+      cancelButtonText: 'ASP.NET',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Exporting through Angular...', '', 'success');
+        this.exportThroughAngular(params);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Exporting through .NET...', '', 'success');
+        this.exportThroughDotNet(params);
+      }
+    });
+  }
+  exportThroughAngular(params: PaginationModel) {
+    this.commonService
+      .doPost(this.apiUrl.apiUrl.user.getUserList, params)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            if (data.Data) {
+              const filteredData: IUserExport[] = data.Data.map(
+                (user: any) => ({
+                  UserId: user.UserId,
+                  FirstName: user.FirstName,
+                  LastName: user.LastName,
+                  Email: user.Email,
+                  RoleName: user.RoleName,
+                }),
+              );
+              this.commonService.exportToExcel(filteredData, 'userList');
+            }
+          }
+        },
+        error: (error: Error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  exportThroughDotNet(params: PaginationModel) {
+    this.commonService
+      .exportData(this.apiUrl.apiUrl.user.exportUserList, params)
+      .subscribe({
+        next: (response: Blob) => {
+          // Create a link element to trigger the download
+          const url = window.URL.createObjectURL(response);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'UserList.xlsx'; // Filename for the downloaded file
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        error: (error) => {
+          console.error('API error:', error);
+        },
+      });
+  }
 
   onDeleteClick(data: string) {
     const apiUrl = this.apiUrl.apiUrl.user.deleteUser;
@@ -252,7 +317,6 @@ export class UserListAgComponent implements OnInit {
           if (data) {
             console.log('data', data);
             this.collectionSize = data?.Data[0]?.TotalFilteredRecord;
-            // debugger;
             // if (
             //   this.filterParams.ColumnFilters.length > 0 ||
             //   this.filterParams.StrSearch != ''

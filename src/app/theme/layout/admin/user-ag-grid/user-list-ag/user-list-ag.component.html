@@ -30,13 +30,14 @@
           (onSortChangeTable)="sortChange($event)"
           (onFilterChangeTable)="onFilterChange($event)"
           [isPrintEnable]="false"
+          [isExportable]="true"
+          (exportList)="exportList($event)"
           [isDeletable]="false"
           (onGlobalSearch)="onGlobalSearch($event)"
           [defaultColDef]="defaultColDef"
           (onReset)="onResetFilters()"
           [perPage]="perPage"
           [listName]="'userList'"
-          [isExportable]="false"
           [collectionSize]="collectionSize"
           [events]="eventsSubject.asObservable()"
         >
@@ -51,7 +52,7 @@
                 "DATATABLE.BUTTONS.IMPORT"
               }}</label>
             </button> -->
-            <a class="btn btn-primary mx-1" [routerLink]="'/user/add'">
+            <a class="btn btn-primary" [routerLink]="'/user/add'">
               <span class="hidebuttonName"
                 ><i class="feather icon-plus"></i> Add New
               </span>
