@@ -25,7 +25,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/fake-data", "src/web.config"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/fake-data",
+              "src/web.config"
+            ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss",
