@@ -34,7 +34,11 @@ export class ApiUrlHelper {
       getCompanyDropdownList: 'user/GetCompanyDropdownList',
       getBranchDropdownList: 'user/GetBranchDropdownList',
       deleteUser: 'user/deleteUser',
-      getLanguageList: 'user/GetLanguageList',
     },
+    userprofile : {
+      getLanguageList: 'userprofile/GetLanguageList',
+      getUserDetailById : 'userprofile/GetUserDetailById',
+      saveUserProfileDetail : 'userprofile/SaveUserProfileDetail'
+    }
   };
 }

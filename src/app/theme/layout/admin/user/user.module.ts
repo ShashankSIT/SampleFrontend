@@ -9,14 +9,14 @@ import { DataTableModule } from 'src/app/pages/common/data-table/data-table.modu
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonComponentModule } from 'src/app/pages/common/common.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { LanguageListComponent } from './user-profile/language-list/language-list.component';
+
 
 @NgModule({
   declarations: [
     UserMasterComponent,
     UserListComponent,
     UserProfileComponent,
-    LanguageListComponent,
+
   ],
   imports: [
     CommonModule,
@@ -24,8 +24,8 @@ import { LanguageListComponent } from './user-profile/language-list/language-lis
     FormsModule,
     ReactiveFormsModule,
     DataTableModule,
-    NgSelectModule,
     CommonComponentModule,
+    NgSelectModule
   ],
 })
 export class UserModule {}

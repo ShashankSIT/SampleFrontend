@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
   <div class="col-sm-12">
     <div class="card">
-      <div class="card-header text-center">
+      <div class="card-header">
         <h5>User Profile</h5>
       </div>
       <div class="card-body">
@@ -57,8 +57,8 @@
               </div>
             </div>
 
-            <div class="container justify-content-center" *ngIf="isEdit">
-              <div class="col-md-12">
+            <div class="container justify-content-center row" *ngIf="isEdit">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">First Name : </label>
                   <input
@@ -87,7 +87,7 @@
                 </div>
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Last Name : </label>
                   <input
@@ -116,7 +116,7 @@
                 </div>
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Email Address : </label>
                   <input
@@ -130,6 +130,7 @@
                         userProfileForm.invalid &&
                         userFormControl?.['email']?.errors?.['required']
                     }"
+                    readonly  
                   />
                   <div>
                     <small
@@ -154,7 +155,7 @@
                 </div>
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Phone Number : </label>
                   <input
@@ -192,7 +193,42 @@
                 </div>
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
+                <label class="form-label fw-bold h5">Gender : </label>
+                <br>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" value="male" id="check-male" formControlName="gender">
+                  <label class="form-check-label h6" for="check-male">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" value="female" id="check-female" formControlName="gender">
+                  <label class="form-check-label h6" for="check-female">
+                    Female
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" value="other" id="check-other" formControlName="gender">
+                  <label class="form-check-label h6" for="check-other">
+                    Others
+                  </label>
+                </div>
+                <div>
+                  <small
+                    class="text-danger"
+                    *ngIf="
+                      userProfileForm.controls['gender'].invalid &&
+                      userProfileForm.controls['gender'].touched
+                    "
+                  >
+                    *Gender is required
+                  </small>
+                </div>
+              </div>
+
+
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Date of Birth : </label>
                   <input
@@ -203,16 +239,16 @@
                     placeholder="Date Of Birth"
                     [ngClass]="{
                       'border-danger':
-                        userProfileForm.invalid &&
-                        userFormControl?.['dob']?.errors?.['required']
+                      userFormControl['dob'].invalid &&
+                      userFormControl['dob'].touched
                     }"
                   />
                   <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
-                        userFormControl?.['dob']?.errors?.['required']
+                        userFormControl['dob'].invalid &&
+                        userFormControl['dob'].touched
                       "
                     >
                       *Date of Birth is required
@@ -221,27 +257,23 @@
                 </div>
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Address : </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    autocomplete="off"
-                    formControlName="address"
-                    placeholder="Address"
-                    [ngClass]="{
-                      'border-danger':
-                        userProfileForm.invalid &&
-                        userFormControl?.['address']?.errors?.['required']
-                    }"
-                  />
+                  <textarea class="form-control" placeholder="Address" autocomplete="off" name="address" id="" [ngClass]="{
+                    'border-danger':
+                    userFormControl['address'].invalid &&
+                    userFormControl['address'].touched
+                  }"
+                  formControlName="address"
+                  rows="1"
+                  ></textarea>
                   <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
-                        userFormControl?.['address']?.errors?.['required']
+                       userFormControl['address'].invalid &&
+                       userFormControl['address'].touched
                       "
                     >
                       *Address is required
@@ -250,9 +282,32 @@
                 </div>
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">Select Language</label>
+                  <label class="form-label fw-bold h5">Language : </label>
+                  <ng-select
+                    [items]="languages"
+                    bindLabel="Language"
+                    bindValue="Id"
+                    placeholder="Select Language"
+                    [multiple]="true"
+                    (change)="onChange($event)"
+                    [closeOnSelect]="false" 
+                    [hideSelected]="true" 
+                    formControlName="languages"
+                  >
+                  </ng-select>
+                  <div>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        userFormControl['languages'].invalid &&
+                        userFormControl['languages'].touched
+                      "
+                    >
+                      *Language is required
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -264,30 +319,40 @@
               <div class="row px-auto my-2 border border-dark border-1">
                 <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">First Name :</label>
-                  <p class="mx-2 h6 my-1">{{ userProfileData.firstName }}</p>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.FirstName }}</p>
                 </div>
                 <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">Last Name :</label>
-                  <p class="mx-2 h6 my-1">{{ userProfileData.lastName }}</p>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.LastName }}</p>
                 </div>
                 <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">Email :</label>
-                  <p class="mx-2 h6 my-1">{{ userProfileData.email }}</p>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.Email }}</p>
                 </div>
 
                 <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">Phone Number:</label>
-                  <p class="mx-2 h6 my-1">{{ userProfileData.phoneNo }}</p>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.PhoneNo }}</p>
+                </div>
+
+                <div class="form-group d-flex col-6">
+                  <label class="fw-bold h5">Gender :</label>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.Gender }}</p>
                 </div>
 
                 <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">Date of Birth:</label>
-                  <p class="mx-2 h6 my-1">{{ userProfileData.dob }}</p>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.DOB }}</p>
                 </div>
 
                 <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">Address :</label>
-                  <p class="mx-2 h6 my-1">{{ userProfileData.address }}</p>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.Address }}</p>
+                </div>
+
+                <div class="form-group d-flex col-6">
+                  <label class="fw-bold h5">Languages : </label>
+                  <p class="mx-2 h6 my-1">{{ userProfile?.FormatLanguages }}</p>
                 </div>
               </div>
             </div>
@@ -311,5 +376,3 @@
     </div>
   </div>
 </div>
-
-<app-language-list> </app-language-list>

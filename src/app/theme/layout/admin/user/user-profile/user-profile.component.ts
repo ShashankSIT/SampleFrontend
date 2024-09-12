@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiUrlHelper } from 'src/app/config/apiUrlHelper';
+import { LanguageModel } from 'src/app/core/model/common-model';
+import { UserDetailModel } from 'src/app/core/model/userprofile-model';
+import { CommonService } from 'src/app/core/services/common.service';
+import {
+  StorageKey,
+  StorageService,
+} from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,44 +15,26 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private apiUrl: ApiUrlHelper,
+    private commonService: CommonService,
+  ) {}
 
   userProfileForm: FormGroup;
   photoUrl: string =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLMI5YxZE03Vnj-s-sth2_JxlPd30Zy7yEGg&s';
   profileHave: boolean = false;
   isEdit: boolean = false;
-  formStatus: string;
+  languages: Array<LanguageModel> = [];
+  selectLanguageIds: string = '';
 
-  userProfileData: any = {
-    firstName: 'First Name Test',
-    lastName: 'Last Name Test',
-    userPhoto: this.photoUrl,
-    email: 'test@gmail.com',
-    phoneNo: 9099784578,
-    dob: '02-12-2024',
-    address: '',
-  };
+  //user profile model
+  userProfile: UserDetailModel;
 
   ngOnInit() {
-    this.userProfileForm = new FormGroup({
-      firstName: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(50),
-      ]),
-      lastName: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(50),
-      ]),
-      userPhoto: new FormControl(this.photoUrl, Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      phoneNo: new FormControl(null, [
-        Validators.required,
-        Validators.maxLength(10),
-      ]),
-      dob: new FormControl(null, [Validators.required]),
-      address: new FormControl(null, [Validators.required]),
-    });
+    this.getLanguageList();
+    this.getUserDetailById();
+    this.setForm();
   }
 
   get userFormControl() {
@@ -81,6 +71,30 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  //set the value of the form
+  setForm() {
+    this.userProfileForm = new FormGroup({
+      firstName: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(50),
+      ]),
+      lastName: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(50),
+      ]),
+      userPhoto: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      phoneNo: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+      gender: new FormControl(null,{ validators : [Validators.required], updateOn : 'blur'}),
+      dob: new FormControl(null, [Validators.required]),
+      address: new FormControl(null, [Validators.required]),
+      languages: new FormControl(this.selectLanguageIds, [Validators.required]),
+    });
+  }
+
   onSubmit() {
     if (!this.userProfileForm.valid) {
       return false;
@@ -89,33 +103,135 @@ export class UserProfileComponent implements OnInit {
     const dobParts = this.userProfileForm.value.dob.split('-');
     const formattedDob = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
 
-    this.userProfileData.firstName = this.userProfileForm.value.firstName;
-    this.userProfileData.lastName = this.userProfileForm.value.lastName;
-    this.userProfileData.email = this.userProfileForm.value.email;
-    this.userProfileData.phoneNo = this.userProfileForm.value.phoneNo;
-    debugger;
-    this.userProfileData.dob = formattedDob;
-    this.userProfileData.address = this.userProfileForm.value.address;
+    this.userProfile.FirstName = this.userProfileForm.value.firstName;
+    this.userProfile.LastName = this.userProfileForm.value.lastName;
+    this.userProfile.Email = this.userProfileForm.value.email;
+    this.userProfile.PhoneNo = this.userProfileForm.value.phoneNo;
+    this.userProfile.Gender = this.userProfileForm.value.gender;
+    this.userProfile.DOB = this.userProfileForm.value.dob;
+    this.userProfile.Address = this.userProfileForm.value.address;
+    this.userProfile.Languages = this.selectLanguageIds;
 
+    //for the setting the
     //for the user Profile
-    this.userProfileData.userPhoto = this.photoUrl;
+    this.userProfile.UserPhoto = this.photoUrl;
+    this.saveUserProfileDetail(this.userProfile);
+    this.setLangugesAfterSubmit();
+
     this.isEdit = false;
     return true;
   }
 
   onEditProfile() {
     this.isEdit = true;
-
-    const dob = new Date(this.userProfileData.dob);
+    const dob = new Date(this.userProfile.DOB);
     const formattedDob = dob.toISOString().split('T')[0];
 
     this.userProfileForm.patchValue({
-      firstName: this.userProfileData.firstName,
-      lastName: this.userProfileData.lastName,
-      email: this.userProfileData.email,
-      phoneNo: this.userProfileData.phoneNo,
-      dob: formattedDob,
-      address: this.userProfileData.address,
+      firstName: this.userProfile.FirstName,
+      lastName: this.userProfile.LastName,
+      email: this.userProfile.Email,
+      phoneNo: this.userProfile.PhoneNo,
+      gender: this.userProfile.Gender || null,
+      dob: this.userProfile.DOB,
+      address: this.userProfile.Address,
+      userPhoto: this.userProfile.UserPhoto || this.photoUrl,
+      languages: this.userProfile.Languages?.split(',').map(Number), // maybe null
     });
+  }
+
+  getLanguageList() {
+    const apiUrl = this.apiUrl.apiUrl.userprofile.getLanguageList;
+
+    this.commonService
+      .doGet(apiUrl)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.languages = data?.Data ?? [];
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+  }
+
+  //set the languages in the userProfileData in Formatting the Languages based on the ID
+  setLangugesAfterSubmit() {
+    const languagesIds = this.userProfile.Languages.split(',');
+
+    const FormateLanguages = languagesIds.map((Id) => {
+      return this.languages.find((lang) => lang.Id === Number(Id)).Language;
+    });
+
+    this.userProfile.FormatLanguages = FormateLanguages;
+  }
+
+  onChange(event: any) {
+    this.selectLanguageIds = event.map((item: any) => item.Id).join(',');
+  }
+
+  //GetUserDetailById
+  getUserDetailById() {
+    const apiUrl = this.apiUrl.apiUrl.userprofile.getUserDetailById;
+    const obj = {
+      UserDetailId: 0,
+      FirstName: ' ',
+      LastName: ' ',
+      Email: '',
+      PhoneNo: 0,
+      UserPhoto: '',
+      Gender: '',
+      DOB: '',
+      Address: '',
+      Languages: '',
+      FormatLanguages: '',
+
+      //Error - if Api is not hit end point then define the object like this
+
+      // LoggedInUserId: 1,
+      // LoggedInEmailId: "",
+      // IsActive: true,
+      // IsDelete: true,
+      // CreatedBy: 0 ,
+      // CreatedOn: "",
+      // StrCreatedOn: "",
+      // UpdatedBy: 0,
+      // UpdatedOn: "",
+      // StrUpdatedOn: "" ,
+      // LoginToken: "" ,
+      // BranchId: 0
+    };
+    this.commonService
+      .doPost(apiUrl, obj)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.userProfile = data.Data || [];
+            this.setLangugesAfterSubmit();
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+  }
+
+  saveUserProfileDetail(obj: any) {
+    const apiUrl = this.apiUrl.apiUrl.userprofile.saveUserProfileDetail;
+    this.commonService
+      .doPost(apiUrl, obj)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.userProfile.UserDetailId = data.Data.UserDetailId  
+          }
+        },
+        error: (err) => [console.error(err)],
+      });
   }
 }
