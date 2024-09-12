@@ -150,17 +150,37 @@ mat-paginator.mat-mdc-paginator {
 }
 
 ::-webkit-scrollbar {
-  width: 12px; /* Width of the scrollbar */
+  width: 12px;
+  /* Width of the scrollbar */
 }
 
 /* Style the scrollbar handle (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the scrollbar */
-  border-radius: 6px; /* Round the edges */
-  border: 3px solid #fff; /* Padding around the scrollbar thumb */
+  background-color: #888;
+  /* Color of the scrollbar */
+  border-radius: 6px;
+  /* Round the edges */
+  border: 3px solid #fff;
+  /* Padding around the scrollbar thumb */
 }
 
 /* Style when the scrollbar is hovered */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Darker color when hovered */
+  background-color: #555;
+  /* Darker color when hovered */
+}
+
+.btn-purple {
+  background-color: #b686c0;
+  color: white;
+
+  &:hover {
+    background-color: #9d6da6;
+    color: white;
+  }
+
+  &:active {
+    background-color: #9d6da6 !important;
+    color: white !important;
+  }
 }
