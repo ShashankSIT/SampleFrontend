@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiUrlHelper } from 'src/app/config/apiUrlHelper';
 import { LanguageModel } from 'src/app/core/model/common-model';
 import { UserDetailModel } from 'src/app/core/model/userprofile-model';
 import { CommonService } from 'src/app/core/services/common.service';
-import {
-  StorageKey,
-  StorageService,
-} from 'src/app/core/services/storage.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private apiUrl: ApiUrlHelper,
     private commonService: CommonService,
+    private fb : FormBuilder
   ) {}
 
   userProfileForm: FormGroup;
@@ -28,6 +25,9 @@ export class UserProfileComponent implements OnInit {
   languages: Array<LanguageModel> = [];
   selectLanguageIds: string = '';
 
+  //temp store profileData
+  ProfileData: File;
+
   //user profile model
   userProfile: UserDetailModel;
 
@@ -36,7 +36,6 @@ export class UserProfileComponent implements OnInit {
     this.getUserDetailById();
     this.setForm();
   }
-
   get userFormControl() {
     return this.userProfileForm.controls;
   }
@@ -45,6 +44,9 @@ export class UserProfileComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.profileHave = true;
+
+      //set the profileData for the sending to backend file
+      this.ProfileData = input.files[0];
 
       const file = input.files[0];
       const reader = new FileReader();
@@ -73,7 +75,7 @@ export class UserProfileComponent implements OnInit {
 
   //set the value of the form
   setForm() {
-    this.userProfileForm = new FormGroup({
+    this.userProfileForm = this.fb.group({
       firstName: new FormControl(null, [
         Validators.required,
         Validators.maxLength(50),
@@ -84,11 +86,14 @@ export class UserProfileComponent implements OnInit {
       ]),
       userPhoto: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
-      phoneNo: new FormControl(null, [
+      phoneNo: [null, [
         Validators.required,
-        Validators.maxLength(10),
-      ]),
-      gender: new FormControl(null,{ validators : [Validators.required], updateOn : 'blur'}),
+        Validators.maxLength(10)
+      ]],
+      gender: new FormControl(null, {
+        validators: [Validators.required],
+        updateOn: 'blur',
+      }),
       dob: new FormControl(null, [Validators.required]),
       address: new FormControl(null, [Validators.required]),
       languages: new FormControl(this.selectLanguageIds, [Validators.required]),
@@ -100,9 +105,6 @@ export class UserProfileComponent implements OnInit {
       return false;
     }
 
-    const dobParts = this.userProfileForm.value.dob.split('-');
-    const formattedDob = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
-
     this.userProfile.FirstName = this.userProfileForm.value.firstName;
     this.userProfile.LastName = this.userProfileForm.value.lastName;
     this.userProfile.Email = this.userProfileForm.value.email;
@@ -110,23 +112,18 @@ export class UserProfileComponent implements OnInit {
     this.userProfile.Gender = this.userProfileForm.value.gender;
     this.userProfile.DOB = this.userProfileForm.value.dob;
     this.userProfile.Address = this.userProfileForm.value.address;
-    this.userProfile.Languages = this.selectLanguageIds;
+    this.userProfile.Languages =
+      this.userProfileForm.value?.languages.toString();
 
     //for the setting the
     //for the user Profile
-    this.userProfile.UserPhoto = this.photoUrl;
-    this.saveUserProfileDetail(this.userProfile);
-    this.setLangugesAfterSubmit();
-
+    this.saveUserProfileDetail();
     this.isEdit = false;
     return true;
   }
 
   onEditProfile() {
     this.isEdit = true;
-    const dob = new Date(this.userProfile.DOB);
-    const formattedDob = dob.toISOString().split('T')[0];
-
     this.userProfileForm.patchValue({
       firstName: this.userProfile.FirstName,
       lastName: this.userProfile.LastName,
@@ -135,7 +132,10 @@ export class UserProfileComponent implements OnInit {
       gender: this.userProfile.Gender || null,
       dob: this.userProfile.DOB,
       address: this.userProfile.Address,
-      userPhoto: this.userProfile.UserPhoto || this.photoUrl,
+      userPhoto:
+        this.userProfile?.UserPhoto != null
+          ? this.userProfile.UserPhoto
+          : this.photoUrl,
       languages: this.userProfile.Languages?.split(',').map(Number), // maybe null
     });
   }
@@ -156,17 +156,6 @@ export class UserProfileComponent implements OnInit {
           console.error(err);
         },
       });
-  }
-
-  //set the languages in the userProfileData in Formatting the Languages based on the ID
-  setLangugesAfterSubmit() {
-    const languagesIds = this.userProfile.Languages.split(',');
-
-    const FormateLanguages = languagesIds.map((Id) => {
-      return this.languages.find((lang) => lang.Id === Number(Id)).Language;
-    });
-
-    this.userProfile.FormatLanguages = FormateLanguages;
   }
 
   onChange(event: any) {
@@ -190,19 +179,6 @@ export class UserProfileComponent implements OnInit {
       FormatLanguages: '',
 
       //Error - if Api is not hit end point then define the object like this
-
-      // LoggedInUserId: 1,
-      // LoggedInEmailId: "",
-      // IsActive: true,
-      // IsDelete: true,
-      // CreatedBy: 0 ,
-      // CreatedOn: "",
-      // StrCreatedOn: "",
-      // UpdatedBy: 0,
-      // UpdatedOn: "",
-      // StrUpdatedOn: "" ,
-      // LoginToken: "" ,
-      // BranchId: 0
     };
     this.commonService
       .doPost(apiUrl, obj)
@@ -210,8 +186,17 @@ export class UserProfileComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data && data.Success) {
+            debugger;
             this.userProfile = data.Data || [];
-            this.setLangugesAfterSubmit();
+            this.userProfile.UserDetailId =
+              data.Data.UserDetailId != 0 ? data.Data.UserDetailId : 0;
+            if (this.userProfile.UserPhoto == null) {
+              this.photoUrl = this.photoUrl;
+              this.userProfile.UserPhoto = this.photoUrl;
+            } else {
+              this.photoUrl = data.Data.UserPhoto;
+              this.userProfile.UserPhoto = data.Data.UserPhoto;
+            }
           }
         },
         error: (err) => {
@@ -220,18 +205,29 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  saveUserProfileDetail(obj: any) {
+  saveUserProfileDetail() {
     const apiUrl = this.apiUrl.apiUrl.userprofile.saveUserProfileDetail;
+    const formData = new FormData();
+    formData.append('UserDetailData', JSON.stringify(this.userProfile));
+    formData.append('ProfileData', this.ProfileData);
     this.commonService
-      .doPost(apiUrl, obj)
+      .doPost(apiUrl, formData)
       .pipe()
       .subscribe({
         next: (data) => {
           if (data && data.Success) {
-            this.userProfile.UserDetailId = data.Data.UserDetailId  
+            debugger;
+
+            this.userProfile.UserDetailId =
+              data.Data.UserDetailId != 0 ? data.Data.UserDetailId : 0;
+            this.getUserDetailById();
           }
         },
         error: (err) => [console.error(err)],
       });
   }
+
+
+  
+  
 }

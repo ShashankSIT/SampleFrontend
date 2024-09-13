@@ -68,5 +68,3 @@ export interface LanguageModel {
   Id: Number;
   Language: string;
 }
-
-

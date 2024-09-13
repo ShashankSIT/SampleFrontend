@@ -5,7 +5,11 @@
         <h5>User Profile</h5>
       </div>
       <div class="card-body">
-        <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit()">
+        <form
+          [formGroup]="userProfileForm"
+          (ngSubmit)="onSubmit()"
+          enctype="multipart/form-data"
+        >
           <div class="row justify-content-center">
             <div class="col-md-12 text-center">
               <!-- Profile Image Section -->
@@ -15,15 +19,7 @@
                     [src]="photoUrl"
                     alt="Profile Image"
                     class="profile-image"
-                    *ngIf="profileHave"
                   />
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLMI5YxZE03Vnj-s-sth2_JxlPd30Zy7yEGg&s"
-                    alt="Profile Image"
-                    class="profile-image"
-                    *ngIf="!profileHave"
-                  />
-
                   <div class="image-overlay">
                     <label class="upload-label">
                       <input
@@ -44,8 +40,8 @@
                   <small
                     class="text-danger"
                     *ngIf="
-                      userProfileForm.invalid &&
-                      userFormControl?.['userPhoto']?.errors?.['required']
+                      userFormControl['userPhoto'].invalid &&
+                      userFormControl['userPhoto'].touched
                     "
                   >
                     *User Profile is required
@@ -130,7 +126,7 @@
                         userProfileForm.invalid &&
                         userFormControl?.['email']?.errors?.['required']
                     }"
-                    readonly  
+                    readonly
                   />
                   <div>
                     <small
@@ -166,15 +162,15 @@
                     placeholder="Phone Number"
                     [ngClass]="{
                       'border-danger':
-                        userProfileForm.invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['required']
+                        userFormControl?.['phoneNo']?.invalid &&
+                        userFormControl?.['phoneNo']?.errors?.['required'] 
                     }"
                   />
                   <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
+                        userFormControl?.['phoneNo']?.invalid &&
                         userFormControl?.['phoneNo']?.errors?.['required']
                       "
                     >
@@ -184,7 +180,9 @@
                       class="text-danger"
                       *ngIf="
                         userProfileForm.invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['maxlength']
+                        userFormControl?.['phoneNo'].touched && 
+                        userFormControl?.['phoneNo'].invalid &&
+                        userFormControl?.['phoneNo']?.errors?.['maxlength'] 
                       "
                     >
                       *Phone Number Should not be a more than 10 length
@@ -195,21 +193,42 @@
 
               <div class="col-md-6">
                 <label class="form-label fw-bold h5">Gender : </label>
-                <br>
+                <br />
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" value="male" id="check-male" formControlName="gender">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    id="check-male"
+                    formControlName="gender"
+                  />
                   <label class="form-check-label h6" for="check-male">
                     Male
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" value="female" id="check-female" formControlName="gender">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    id="check-female"
+                    formControlName="gender"
+                  />
                   <label class="form-check-label h6" for="check-female">
                     Female
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" value="other" id="check-other" formControlName="gender">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    value="other"
+                    id="check-other"
+                    formControlName="gender"
+                  />
                   <label class="form-check-label h6" for="check-other">
                     Others
                   </label>
@@ -227,7 +246,6 @@
                 </div>
               </div>
 
-
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Date of Birth : </label>
@@ -239,8 +257,8 @@
                     placeholder="Date Of Birth"
                     [ngClass]="{
                       'border-danger':
-                      userFormControl['dob'].invalid &&
-                      userFormControl['dob'].touched
+                        userFormControl['dob'].invalid &&
+                        userFormControl['dob'].touched
                     }"
                   />
                   <div>
@@ -260,20 +278,26 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Address : </label>
-                  <textarea class="form-control" placeholder="Address" autocomplete="off" name="address" id="" [ngClass]="{
-                    'border-danger':
-                    userFormControl['address'].invalid &&
-                    userFormControl['address'].touched
-                  }"
-                  formControlName="address"
-                  rows="1"
+                  <textarea
+                    class="form-control"
+                    placeholder="Address"
+                    autocomplete="off"
+                    name="address"
+                    id=""
+                    [ngClass]="{
+                      'border-danger':
+                        userFormControl['address'].invalid &&
+                        userFormControl['address'].touched
+                    }"
+                    formControlName="address"
+                    rows="1"
                   ></textarea>
                   <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                       userFormControl['address'].invalid &&
-                       userFormControl['address'].touched
+                        userFormControl['address'].invalid &&
+                        userFormControl['address'].touched
                       "
                     >
                       *Address is required
@@ -292,10 +316,21 @@
                     placeholder="Select Language"
                     [multiple]="true"
                     (change)="onChange($event)"
-                    [closeOnSelect]="false" 
-                    [hideSelected]="true" 
+                    [closeOnSelect]="false"
+                    [hideSelected]="false"
                     formControlName="languages"
                   >
+                    <!-- Custom template for displaying multiple selected items -->
+                    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                      <!-- Display first 3 selected items -->
+                      <div *ngFor="let item of items.slice(0, 3); trackBy: items.Id" class="ng-value">
+                        <span class="ng-value-label right" (click)="clear(item)" aria-hidden="true">X {{ item.Language }}</span>
+                      </div>
+                      <!-- Display the number of additional items if more than 3 are selected -->
+                      <div *ngIf="items.length > 3" class="ng-value">
+                        <span class="ng-value-label">{{ items.length - 3 }} more...</span>
+                      </div>
+                    </ng-template>
                   </ng-select>
                   <div>
                     <small

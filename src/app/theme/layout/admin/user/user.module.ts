@@ -10,14 +10,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonComponentModule } from 'src/app/pages/common/common.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
-
 @NgModule({
-  declarations: [
-    UserMasterComponent,
-    UserListComponent,
-    UserProfileComponent,
-
-  ],
+  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -25,7 +19,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ReactiveFormsModule,
     DataTableModule,
     CommonComponentModule,
-    NgSelectModule
+    NgSelectModule,
   ],
 })
 export class UserModule {}
