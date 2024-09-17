@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { ApiResponse } from '../model/common-model';
+import { ApiResponse, PaginationModel } from '../model/common-model';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from 'crypto-js';
 import { NotificationType } from '../enums/common-enum';
@@ -10,11 +10,17 @@ import { ApiUrlHelper } from 'src/app/config/apiUrlHelper';
 import { Buffer } from 'buffer';
 import { StorageKey } from './storage.service';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
+  EXCEL_TYPE =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  EXCEL_EXTENSION = '.xlsx';
+
   private key = CryptoJS.enc.Utf8.parse('669DA974-AA2F-1429-AD1A-64FEF721F1FF');
   private iv = CryptoJS.enc.Utf8.parse('669DA974-AA2F-1429-AD1A-64FEF721F1FF');
   constructor(
@@ -82,6 +88,22 @@ export class CommonService {
     );
   }
 
+  exportData(apiUrl: string, params: PaginationModel) {
+    const url = `${environment.apiUrl}${apiUrl}`;
+    const loginData = JSON.parse(
+      this.Decrypt(localStorage.getItem(StorageKey.loginData)),
+    );
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + loginData.JWTToken,
+      }),
+      responseType: 'blob' as 'json', // Specify response type as blob
+    };
+
+    return this.http.post(url, params, httpOptions);
+  }
+
   downloadFile(apiUrl: string): any {
     const httpOptions = {
       headers: new HttpHeaders(),
@@ -146,6 +168,33 @@ export class CommonService {
     );
   }
 
+  exportToExcel(data: any[], fileName: string): void {
+    // Create a worksheet from the data
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    // Create a workbook and add the worksheet
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data'],
+    };
+
+    // Generate a buffer for the Excel file
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    // Call the save function to download the Excel file
+    this.saveAsExcelFile(excelBuffer, fileName);
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
+    saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + this.EXCEL_EXTENSION,
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
@@ -166,9 +215,7 @@ export class CommonService {
   }
 
   /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    console.log('Log from service : ' + message);
-  }
+  private log(message: string) {}
 
   encodeBase64(plainString: string): string {
     return Buffer.from(plainString, 'ascii').toString('base64');

@@ -37,12 +37,8 @@
 
       <!-- Export Button -->
       <ng-container *ngIf="isExportable">
-        <button
-          (click)="onBtnExport()"
-          type="button"
-          class="btn btn-soft-purple"
-        >
-          <i class="fas fa-file-export"></i>
+        <button (click)="onBtnExport()" type="button" class="btn btn-purple">
+          <i class="fas fa-file-upload"></i>
           <span class="hidebuttonName">Export</span>
         </button>
       </ng-container>
@@ -55,7 +51,7 @@
           class="btn btn-danger"
         >
           <i class="fas fa-trash-alt"></i>
-          <span class="hidebuttonName">Delete Selected Products</span>
+          <span class="hidebuttonName">Delete Selected Records</span>
         </button>
       </ng-container>
 
@@ -63,7 +59,7 @@
       <ng-container *ngIf="isDeleteAll">
         <button (click)="deleteAllData()" type="button" class="btn btn-danger">
           <i class="fas fa-trash-alt"></i>
-          <span class="hidebuttonName">Delete All Products</span>
+          <span class="hidebuttonName">Delete All Records</span>
         </button>
       </ng-container>
 

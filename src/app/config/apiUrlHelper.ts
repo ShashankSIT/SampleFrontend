@@ -30,10 +30,13 @@ export class ApiUrlHelper {
       saveUser: 'user/SaveUser',
       getRolesList: 'user/GetRolesList',
       getUserList: 'user/GetUserList',
+      exportUserList: 'user/ExportUserList',
       getUserDropdownList: 'user/GetUserDropdownList',
       getCompanyDropdownList: 'user/GetCompanyDropdownList',
       getBranchDropdownList: 'user/GetBranchDropdownList',
       deleteUser: 'user/deleteUser',
+      deleteAllUser: 'user/DeleteAllUser',
+      deleteUserByStringSplit: 'user/DeleteMultipleRecords',
     },
     userprofile: {
       getLanguageList: 'userprofile/GetLanguageList',

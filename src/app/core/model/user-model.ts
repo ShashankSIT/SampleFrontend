@@ -15,3 +15,11 @@ export interface IUserList {
   RoleName: string;
   IsActive: boolean;
 }
+
+export interface IUserExport {
+  UserId: number;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  RoleName: string;
+}

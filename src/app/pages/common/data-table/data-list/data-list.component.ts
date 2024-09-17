@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
@@ -64,12 +65,17 @@ export class DataListComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.initList();
+    this.setMaxHeight();
   }
 
   ngAfterViewInit(): void {
+    this.setMaxHeight();
     if (this.dataSource.filteredData.length > 0) {
       this.setTablePagination();
     }
+  }
+  ngDoCheck(): void {
+    this.setMaxHeight();
   }
 
   initList() {
@@ -220,5 +226,21 @@ export class DataListComponent implements AfterViewInit {
       return this.columns.find((d) => d.columnDef == columnDef).buttons;
     }
     return '';
+  }
+
+  @ViewChild('grid') block!: ElementRef;
+  @Input() maxHeight: string = '';
+
+  setMaxHeight() {
+    if (this.block) {
+      const datas = this.block.nativeElement.getBoundingClientRect();
+      const bodyWrapper: HTMLElement | null =
+        document.querySelector('.table-container');
+      if (bodyWrapper) {
+        // Dynamically calculate max-height
+        const calculatedMaxHeight = window.innerHeight - datas.top - 120;
+        bodyWrapper.style.maxHeight = `${calculatedMaxHeight}px`;
+      }
+    }
   }
 }

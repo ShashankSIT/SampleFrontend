@@ -30,15 +30,19 @@
           (onSortChangeTable)="sortChange($event)"
           (onFilterChangeTable)="onFilterChange($event)"
           [isPrintEnable]="false"
-          [isDeletable]="false"
+          [isExportable]="true"
+          [isDeleteAll]="true"
+          (exportList)="exportList($event)"
+          [isDeletable]="true"
           (onGlobalSearch)="onGlobalSearch($event)"
+          (onDeleteAll)="deleteAll()"
           [defaultColDef]="defaultColDef"
           (onReset)="onResetFilters()"
           [perPage]="perPage"
           [listName]="'userList'"
-          [isExportable]="false"
           [collectionSize]="collectionSize"
           [events]="eventsSubject.asObservable()"
+          (addMultiItem)="getSelectedRowsData($event)"
         >
           <ng-container topButtons>
             <!-- <button
@@ -51,7 +55,7 @@
                 "DATATABLE.BUTTONS.IMPORT"
               }}</label>
             </button> -->
-            <a class="btn btn-primary mx-1" [routerLink]="'/user/add'">
+            <a class="btn btn-primary" [routerLink]="'/user/add'">
               <span class="hidebuttonName"
                 ><i class="feather icon-plus"></i> Add New
               </span>
