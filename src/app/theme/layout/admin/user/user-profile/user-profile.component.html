@@ -118,7 +118,7 @@
                   <input
                     type="email"
                     class="form-control"
-                    autocomplete="off"
+                    autocomplete="on"
                     formControlName="email"
                     placeholder="Email"
                     [ngClass]="{
@@ -126,7 +126,7 @@
                         userProfileForm.invalid &&
                         userFormControl?.['email']?.errors?.['required']
                     }"
-                    readonly
+                    [readOnly]="isreadonly"
                   />
                   <div>
                     <small
@@ -163,7 +163,7 @@
                     [ngClass]="{
                       'border-danger':
                         userFormControl?.['phoneNo']?.invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['required'] 
+                        userFormControl?.['phoneNo']?.errors?.['required']
                     }"
                   />
                   <div>
@@ -180,9 +180,9 @@
                       class="text-danger"
                       *ngIf="
                         userProfileForm.invalid &&
-                        userFormControl?.['phoneNo'].touched && 
+                        userFormControl?.['phoneNo'].touched &&
                         userFormControl?.['phoneNo'].invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['maxlength'] 
+                        userFormControl?.['phoneNo']?.errors?.['maxlength']
                       "
                     >
                       *Phone Number Should not be a more than 10 length
@@ -271,41 +271,19 @@
                     >
                       *Date of Birth is required
                     </small>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="form-label fw-bold h5">Address : </label>
-                  <textarea
-                    class="form-control"
-                    placeholder="Address"
-                    autocomplete="off"
-                    name="address"
-                    id=""
-                    [ngClass]="{
-                      'border-danger':
-                        userFormControl['address'].invalid &&
-                        userFormControl['address'].touched
-                    }"
-                    formControlName="address"
-                    rows="1"
-                  ></textarea>
-                  <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                        userFormControl['address'].invalid &&
-                        userFormControl['address'].touched
+                        userFormControl?.['dob']?.invalid &&
+                        userFormControl?.['dob']?.errors?.['futureDate']
                       "
                     >
-                      *Address is required
+                      *Date of Birth cannot be in the future
                     </small>
                   </div>
                 </div>
               </div>
-
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="form-label fw-bold h5">Language : </label>
@@ -321,14 +299,31 @@
                     formControlName="languages"
                   >
                     <!-- Custom template for displaying multiple selected items -->
-                    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                    <ng-template
+                      ng-multi-label-tmp
+                      let-items="items"
+                      let-clear="clear"
+                    >
                       <!-- Display first 3 selected items -->
-                      <div *ngFor="let item of items.slice(0, 3); trackBy: items.Id" class="ng-value">
-                        <span class="ng-value-label right" (click)="clear(item)" aria-hidden="true">X {{ item.Language }}</span>
+                      <div
+                        *ngFor="
+                          let item of items.slice(0, 3);
+                          trackBy: items.Id
+                        "
+                        class="ng-value"
+                      >
+                        <span
+                          class="ng-value-label right"
+                          (click)="clear(item)"
+                          aria-hidden="true"
+                          >X {{ item.Language }}</span
+                        >
                       </div>
                       <!-- Display the number of additional items if more than 3 are selected -->
                       <div *ngIf="items.length > 3" class="ng-value">
-                        <span class="ng-value-label">{{ items.length - 3 }} more...</span>
+                        <span class="ng-value-label"
+                          >{{ items.length - 3 }} more...</span
+                        >
                       </div>
                     </ng-template>
                   </ng-select>
@@ -344,6 +339,105 @@
                     </small>
                   </div>
                 </div>
+              </div>
+
+              <hr />
+
+              <!-- <div formArrayName="address" >
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label fw-bold h5">Address : </label>
+                    <textarea
+                      class="form-control"
+                      placeholder="Address"
+                      autocomplete="off"
+                      name="address"
+                      id=""
+                      [ngClass]="{
+                        'border-danger':
+                          userFormControl['address'].invalid &&
+                          userFormControl['address'].touched
+                      }"
+                      formControlName="address"
+                      rows="1"
+                    ></textarea>
+                    <div>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          userFormControl['address'].invalid &&
+                          userFormControl['address'].touched
+                        "
+                      >
+                        *Address is required
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div formArrayName="address">
+                <div class="d-flex justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="AddAddress()"
+                  >
+                    Add Address
+                  </button>
+                </div>
+
+                <div
+                  *ngFor="
+                    let control of userProfileForm.get('address')['controls'];
+                    let i = index
+                  "
+                >
+                  <div class="d-flex my-2 justify-content-between">
+                    <input
+                      type="text"
+                      class="form-control w-75"
+                      placeholder="Add Adddress..."
+                      [formControlName]="i"
+                      value="control.value"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="removeAddress(i)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+
+                  <div class="text-danger" *ngIf="control.invalid">
+                    *Address is Required
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4 my-2">
+                <select class="form-select" (change)="onCountryChnage($event)">
+                  <option *ngFor="let c of countryList" [value]="c.CountryId">
+                    {{ c.CountryName }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-4 my-2">
+                <select class="form-select" (change)="onStateChange($event)">
+                  <option *ngFor="let s of stateList" [value]="s.StateId">
+                    {{ s.StateName }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-4 my-2">
+                <select class="form-select">
+                  <option *ngFor="let c of cityList" [value]="c.CityId">
+                    {{ c.CityName }}
+                  </option>
+                </select>
               </div>
             </div>
 
@@ -381,14 +475,19 @@
                 </div>
 
                 <div class="form-group d-flex col-6">
-                  <label class="fw-bold h5">Address :</label>
-                  <p class="mx-2 h6 my-1">{{ userProfile?.Address }}</p>
-                </div>
-
-                <div class="form-group d-flex col-6">
                   <label class="fw-bold h5">Languages : </label>
                   <p class="mx-2 h6 my-1">{{ userProfile?.FormatLanguages }}</p>
                 </div>
+              </div>
+            </div>
+
+            <div class="container" *ngIf="!isEdit">
+              <label class="fw-bold h5">Address :</label>
+              <div
+                class="my-1"
+                *ngFor="let i of addressArray; let index = index"
+              >
+                <p class="h6">{{ i }}</p>
               </div>
             </div>
 

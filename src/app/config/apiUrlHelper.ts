@@ -39,6 +39,9 @@ export class ApiUrlHelper {
       getLanguageList: 'userprofile/GetLanguageList',
       getUserDetailById: 'userprofile/GetUserDetailById',
       saveUserProfileDetail: 'userprofile/SaveUserProfileDetail',
+      getCountryList: 'userprofile/GetCountryList',
+      getStateListById: 'userprofile/GetStateListById',
+      getCityListById: 'userprofile/GetCityListById',
     },
   };
 }

@@ -23,3 +23,30 @@ export interface UserDetailModel {
   LoginToken: string | null;
   BranchId: number | null;
 }
+
+export interface CountryModel {
+  CountryId: number;
+  CountryName: string;
+}
+
+export interface StateModel {
+  StateId: number;
+  StateName: string;
+  CountryId: number;
+}
+
+export interface CityModel {
+  CityId: number;
+  CityName: string;
+  StateId: number;
+}
+
+export interface AddressModel {
+  AddressId: number;
+  Address1: string;
+  Address2: string;
+  CountryId: string;
+  StateId: string;
+  CityId: number;
+  UserDetailId: number;
+}

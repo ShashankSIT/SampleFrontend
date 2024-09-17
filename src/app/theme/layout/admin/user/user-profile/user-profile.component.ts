@@ -1,9 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { error } from 'console';
+import { read } from 'fs';
 import { ApiUrlHelper } from 'src/app/config/apiUrlHelper';
 import { LanguageModel } from 'src/app/core/model/common-model';
-import { UserDetailModel } from 'src/app/core/model/userprofile-model';
+import {
+  CityModel,
+  CountryModel,
+  StateModel,
+  UserDetailModel,
+} from 'src/app/core/model/userprofile-model';
 import { CommonService } from 'src/app/core/services/common.service';
+import { CustomValidator } from 'src/app/core/validators/CustomValidator.validators';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,9 +28,10 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private apiUrl: ApiUrlHelper,
     private commonService: CommonService,
-    private fb : FormBuilder
+    private fb: FormBuilder,
   ) {}
 
+  // Fields
   userProfileForm: FormGroup;
   photoUrl: string =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLMI5YxZE03Vnj-s-sth2_JxlPd30Zy7yEGg&s';
@@ -24,14 +39,18 @@ export class UserProfileComponent implements OnInit {
   isEdit: boolean = false;
   languages: Array<LanguageModel> = [];
   selectLanguageIds: string = '';
-
+  isreadonly: boolean = false;
+  addressArray: Array<string> = [];
+  countryList: Array<CountryModel> = [];
+  stateList: Array<StateModel> = [];
+  cityList: Array<CityModel> = [];
   //temp store profileData
   ProfileData: File;
-
   //user profile model
   userProfile: UserDetailModel;
 
   ngOnInit() {
+    this.isreadonly = !this.isreadonly;
     this.getLanguageList();
     this.getUserDetailById();
     this.setForm();
@@ -75,6 +94,9 @@ export class UserProfileComponent implements OnInit {
 
   //set the value of the form
   setForm() {
+    var today = new Date();
+    var todayTimestamp = today.getTime();
+
     this.userProfileForm = this.fb.group({
       firstName: new FormControl(null, [
         Validators.required,
@@ -86,32 +108,120 @@ export class UserProfileComponent implements OnInit {
       ]),
       userPhoto: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
-      phoneNo: [null, [
-        Validators.required,
-        Validators.maxLength(10)
-      ]],
+      phoneNo: [
+        null,
+        [Validators.required, CustomValidator.maxLengthValidator(10)],
+      ],
       gender: new FormControl(null, {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
-      dob: new FormControl(null, [Validators.required]),
-      address: new FormControl(null, [Validators.required]),
+      dob: new FormControl(null, [
+        Validators.required,
+        CustomValidator.futureDateValidator(),
+      ]),
+      address: new FormArray([]),
       languages: new FormControl(this.selectLanguageIds, [Validators.required]),
     });
+  }
+
+  //for the multiple address
+  AddAddress() {
+    (<FormArray>this.userProfileForm.get('address')).push(
+      new FormControl(null, Validators.required),
+    );
+    console.log(this.userProfileForm.get('address').value);
+  }
+
+  removeAddress(i: number) {
+    const control = <FormArray>this.userProfileForm.get('address');
+    control.removeAt(i);
+
+    console.log(this.userProfileForm.get('address').value);
+  }
+
+  //Get CountryList
+  getCountryList() {
+    const apiUrl = this.apiUrl.apiUrl.userprofile.getCountryList;
+
+    this.commonService
+      .doGet(apiUrl)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.countryList = data.Data;
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+  }
+
+  onCountryChnage(event: any) {
+    this.getStateList(event.target.value);
+  }
+
+  onStateChange(event: any) {
+    this.getCityList(event.target.value);
+  }
+
+  getStateList(CountryId: any) {
+    const apiUrl = this.apiUrl.apiUrl.userprofile.getStateListById;
+
+    const obj = {
+      CountryId: CountryId,
+    };
+
+    this.commonService
+      .doPost(apiUrl, obj)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.stateList = data.Data;
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+  }
+
+  getCityList(StateId: any) {
+    const apiUrl = this.apiUrl.apiUrl.userprofile.getCityListById;
+
+    const obj = {
+      StateId: StateId,
+    };
+
+    this.commonService
+      .doPost(apiUrl, obj)
+      .pipe()
+      .subscribe({
+        next: (data) => {
+          if (data && data.Success) {
+            this.cityList = data.Data;
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
   }
 
   onSubmit() {
     if (!this.userProfileForm.valid) {
       return false;
     }
-
-    this.userProfile.FirstName = this.userProfileForm.value.firstName;
-    this.userProfile.LastName = this.userProfileForm.value.lastName;
-    this.userProfile.Email = this.userProfileForm.value.email;
+    this.userProfile.FirstName = this.userProfileForm.value.firstName.trim();
+    this.userProfile.LastName = this.userProfileForm.value.lastName.trim();
+    //this.userProfile.Email = this.userProfileForm.value.email;
     this.userProfile.PhoneNo = this.userProfileForm.value.phoneNo;
     this.userProfile.Gender = this.userProfileForm.value.gender;
     this.userProfile.DOB = this.userProfileForm.value.dob;
-    this.userProfile.Address = this.userProfileForm.value.address;
+    this.userProfile.Address = this.userProfileForm.value.address.join();
     this.userProfile.Languages =
       this.userProfileForm.value?.languages.toString();
 
@@ -124,6 +234,17 @@ export class UserProfileComponent implements OnInit {
 
   onEditProfile() {
     this.isEdit = true;
+
+    debugger;
+    const addressArray = this.userProfileForm.get('address') as FormArray;
+    addressArray.clear(); // Clear the existing FormArray
+
+    // Split the Address string and add FormControls to the FormArray
+    const addresses = this.userProfile.Address.split(',');
+    addresses.forEach((address: string) => {
+      addressArray.push(new FormControl(address.trim(), Validators.required)); // Add each address
+    });
+
     this.userProfileForm.patchValue({
       firstName: this.userProfile.FirstName,
       lastName: this.userProfile.LastName,
@@ -131,13 +252,14 @@ export class UserProfileComponent implements OnInit {
       phoneNo: this.userProfile.PhoneNo,
       gender: this.userProfile.Gender || null,
       dob: this.userProfile.DOB,
-      address: this.userProfile.Address,
       userPhoto:
         this.userProfile?.UserPhoto != null
           ? this.userProfile.UserPhoto
           : this.photoUrl,
       languages: this.userProfile.Languages?.split(',').map(Number), // maybe null
     });
+
+    this.getCountryList();
   }
 
   getLanguageList() {
@@ -186,17 +308,11 @@ export class UserProfileComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data && data.Success) {
-            debugger;
             this.userProfile = data.Data || [];
             this.userProfile.UserDetailId =
               data.Data.UserDetailId != 0 ? data.Data.UserDetailId : 0;
-            if (this.userProfile.UserPhoto == null) {
-              this.photoUrl = this.photoUrl;
-              this.userProfile.UserPhoto = this.photoUrl;
-            } else {
-              this.photoUrl = data.Data.UserPhoto;
-              this.userProfile.UserPhoto = data.Data.UserPhoto;
-            }
+            this.photoUrl = data.Data.UserPhoto;
+            this.addressArray = data.Data.Address.split(',');
           }
         },
         error: (err) => {
@@ -216,8 +332,6 @@ export class UserProfileComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data && data.Success) {
-            debugger;
-
             this.userProfile.UserDetailId =
               data.Data.UserDetailId != 0 ? data.Data.UserDetailId : 0;
             this.getUserDetailById();
@@ -226,8 +340,4 @@ export class UserProfileComponent implements OnInit {
         error: (err) => [console.error(err)],
       });
   }
-
-
-  
-  
 }
