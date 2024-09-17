@@ -28,6 +28,10 @@ import Swal from 'sweetalert2';
 export class UserListAgComponent implements OnInit {
   columnDefs: ColDef[] = [
     {
+      checkboxSelection: true,
+      maxWidth: 50,
+    },
+    {
       field: 'Id',
       headerName: 'Id',
       maxWidth: 250,
@@ -100,8 +104,8 @@ export class UserListAgComponent implements OnInit {
           }
         },
       },
-      minWidth: 130,
-      maxWidth: 135,
+      minWidth: 180,
+      maxWidth: 185,
       lockPinned: true,
       pinned: 'right',
     },
@@ -179,6 +183,94 @@ export class UserListAgComponent implements OnInit {
     this.filterParams.StrSearch = event.trim();
     this.getAllUsers(this.filterParams);
   }
+  deleteAll() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete all!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const apiUrl = this.apiUrl.apiUrl.user.deleteAllUser;
+        this.commonService.doPost(apiUrl, {}).subscribe({
+          next: (response) => {
+            if (response?.Success) {
+              debugger;
+              this.commonService.showNotification(
+                'User',
+                response.Message,
+                NotificationType.SUCCESS,
+              );
+            } else {
+              this.commonService.showNotification(
+                'User',
+                response.Message,
+                NotificationType.ERROR,
+              );
+            }
+            this.getAllUsers(this.filterParams);
+          },
+        });
+      }
+    });
+  }
+  getSelectedRowsData(event: any) {
+    this.deleteSelectedProduct(event);
+  }
+  deleteSelectedProduct(data: any) {
+    if (data && data.length > 0) {
+      let IdsToDelete: number[] = [];
+      data.map((data) => {
+        IdsToDelete.push(data.Id);
+      });
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete them!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteMultipleUsers(IdsToDelete);
+        }
+      });
+    }
+  }
+
+  deleteMultipleUsers(IdsToDelete: number[]) {
+    const body = {
+      Ids: IdsToDelete,
+    };
+    this.commonService
+      .doPost(this.apiUrl.apiUrl.user.deleteUserByStringSplit, body)
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.commonService.showNotification(
+              'User',
+              response.Message,
+              NotificationType.SUCCESS,
+            );
+          } else {
+            this.commonService.showNotification(
+              'User',
+              response.Message,
+              NotificationType.ERROR,
+            );
+          }
+          this.getAllUsers(this.filterParams);
+        },
+        error: (error) => {
+          console.error('Error:', error);
+        },
+      });
+  }
   onResetFilters() {
     this.filterParams.PageNumber = 1;
     this.filterParams.PageSize = 10;
@@ -235,9 +327,7 @@ export class UserListAgComponent implements OnInit {
             }
           }
         },
-        error: (error: Error) => {
-          console.log(error);
-        },
+        error: (error: Error) => {},
       });
   }
 
@@ -315,7 +405,6 @@ export class UserListAgComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data) {
-            console.log('data', data);
             this.collectionSize = data?.Data[0]?.TotalFilteredRecord;
             // if (
             //   this.filterParams.ColumnFilters.length > 0 ||
@@ -333,9 +422,7 @@ export class UserListAgComponent implements OnInit {
             });
           }
         },
-        error: (error: Error) => {
-          console.log(error);
-        },
+        error: (error: Error) => {},
       });
   }
 }

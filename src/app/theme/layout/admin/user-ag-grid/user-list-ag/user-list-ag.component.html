@@ -31,15 +31,18 @@
           (onFilterChangeTable)="onFilterChange($event)"
           [isPrintEnable]="false"
           [isExportable]="true"
+          [isDeleteAll]="true"
           (exportList)="exportList($event)"
-          [isDeletable]="false"
+          [isDeletable]="true"
           (onGlobalSearch)="onGlobalSearch($event)"
+          (onDeleteAll)="deleteAll()"
           [defaultColDef]="defaultColDef"
           (onReset)="onResetFilters()"
           [perPage]="perPage"
           [listName]="'userList'"
           [collectionSize]="collectionSize"
           [events]="eventsSubject.asObservable()"
+          (addMultiItem)="getSelectedRowsData($event)"
         >
           <ng-container topButtons>
             <!-- <button
