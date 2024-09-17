@@ -28,7 +28,6 @@ export class canActivate implements CanActivate {
       if (!(this.commonService.role_rights.length > 0)) {
         await this.commonService.getMenuListByRoleId(userData.RoleId);
       }
-      //console.log(this.commonService.role_rights);
       const _url = state.url;
       if (_url.includes('edit')) {
         const parts = _url.split('/edit/');

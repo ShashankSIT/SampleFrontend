@@ -215,9 +215,7 @@ export class CommonService {
   }
 
   /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    console.log('Log from service : ' + message);
-  }
+  private log(message: string) {}
 
   encodeBase64(plainString: string): string {
     return Buffer.from(plainString, 'ascii').toString('base64');

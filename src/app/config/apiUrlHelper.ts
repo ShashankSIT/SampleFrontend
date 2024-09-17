@@ -34,6 +34,8 @@ export class ApiUrlHelper {
       getCompanyDropdownList: 'user/GetCompanyDropdownList',
       getBranchDropdownList: 'user/GetBranchDropdownList',
       deleteUser: 'user/deleteUser',
+      deleteAllUser: 'user/DeleteAllUser',
+      deleteUserByStringSplit: 'user/DeleteMultipleRecords',
     },
   };
 }
