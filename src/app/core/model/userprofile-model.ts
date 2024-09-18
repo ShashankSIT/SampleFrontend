@@ -7,7 +7,7 @@ export interface UserDetailModel {
   UserPhoto: string | null;
   Gender: string | null;
   DOB: string | null;
-  Address: string | null;
+  Address: Array<AddressModel> | null;
   Languages: string | null;
   FormatLanguages: string[] | null;
   LoggedInUserId: number;
@@ -45,8 +45,11 @@ export interface AddressModel {
   AddressId: number;
   Address1: string;
   Address2: string;
-  CountryId: string;
-  StateId: string;
+  CountryId: number;
+  StateId: number;
   CityId: number;
   UserDetailId: number;
+  CountryName : string;
+  StateName : string;
+  CityName : string;
 }

@@ -11,6 +11,7 @@ import { read } from 'fs';
 import { ApiUrlHelper } from 'src/app/config/apiUrlHelper';
 import { LanguageModel } from 'src/app/core/model/common-model';
 import {
+  AddressModel,
   CityModel,
   CountryModel,
   StateModel,
@@ -30,7 +31,7 @@ export class UserProfileComponent implements OnInit {
     private commonService: CommonService,
     private fb: FormBuilder,
   ) {}
-
+  
   // Fields
   userProfileForm: FormGroup;
   photoUrl: string =
@@ -40,10 +41,10 @@ export class UserProfileComponent implements OnInit {
   languages: Array<LanguageModel> = [];
   selectLanguageIds: string = '';
   isreadonly: boolean = false;
-  addressArray: Array<string> = [];
+  addressArray: Array<AddressModel> = [];
   countryList: Array<CountryModel> = [];
-  stateList: Array<StateModel> = [];
-  cityList: Array<CityModel> = [];
+  stateList: Array<Array<StateModel>> = [];
+  cityList: Array<Array<CityModel>> = [];
   //temp store profileData
   ProfileData: File;
   //user profile model
@@ -53,7 +54,10 @@ export class UserProfileComponent implements OnInit {
     this.isreadonly = !this.isreadonly;
     this.getLanguageList();
     this.getUserDetailById();
+    this.getCountryList()
     this.setForm();
+
+    
   }
   get userFormControl() {
     return this.userProfileForm.controls;
@@ -95,7 +99,6 @@ export class UserProfileComponent implements OnInit {
   //set the value of the form
   setForm() {
     var today = new Date();
-    var todayTimestamp = today.getTime();
 
     this.userProfileForm = this.fb.group({
       firstName: new FormControl(null, [
@@ -110,7 +113,7 @@ export class UserProfileComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       phoneNo: [
         null,
-        [Validators.required, CustomValidator.maxLengthValidator(10)],
+        [Validators.required, CustomValidator.maxLengthValidator(10),Validators.pattern('^[0-9]*$')],
       ],
       gender: new FormControl(null, {
         validators: [Validators.required],
@@ -125,12 +128,21 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  get address() : FormArray{
+    return this.userProfileForm.get('address') as FormArray
+  }
   //for the multiple address
-  AddAddress() {
+  AddAddress()  {
     (<FormArray>this.userProfileForm.get('address')).push(
-      new FormControl(null, Validators.required),
+      new FormGroup({
+        AddressId :  new FormControl(null),
+        Address1 : new FormControl(null,Validators.required),
+        Address2 : new FormControl(null,Validators.required),
+        CountryId : new FormControl(this.getCountryList(),Validators.required),
+        StateId : new FormControl(null,Validators.required),
+        CityId : new FormControl(null,Validators.required),
+      })  
     );
-    console.log(this.userProfileForm.get('address').value);
   }
 
   removeAddress(i: number) {
@@ -159,15 +171,19 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  onCountryChnage(event: any) {
-    this.getStateList(event.target.value);
+  onCountryChnage(event: any,index : number) {
+    this.stateList[index] = []
+    this.cityList[index] = []
+    this.getStateList(event.target.value , index);
   }
 
-  onStateChange(event: any) {
-    this.getCityList(event.target.value);
+  onStateChange(event: any, index : number) {
+    this.cityList[index] = []
+    this.getCityList(event.target.value,index);
   }
 
-  getStateList(CountryId: any) {
+  getStateList(CountryId: any, index : number ) {
+    
     const apiUrl = this.apiUrl.apiUrl.userprofile.getStateListById;
 
     const obj = {
@@ -180,7 +196,7 @@ export class UserProfileComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data && data.Success) {
-            this.stateList = data.Data;
+            this.stateList[index] = data.Data;
           }
         },
         error: (err) => {
@@ -189,7 +205,7 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  getCityList(StateId: any) {
+  getCityList(StateId: any,index : number) {
     const apiUrl = this.apiUrl.apiUrl.userprofile.getCityListById;
 
     const obj = {
@@ -202,7 +218,7 @@ export class UserProfileComponent implements OnInit {
       .subscribe({
         next: (data) => {
           if (data && data.Success) {
-            this.cityList = data.Data;
+            this.cityList[index] = data.Data;
           }
         },
         error: (err) => {
@@ -215,13 +231,13 @@ export class UserProfileComponent implements OnInit {
     if (!this.userProfileForm.valid) {
       return false;
     }
+
     this.userProfile.FirstName = this.userProfileForm.value.firstName.trim();
     this.userProfile.LastName = this.userProfileForm.value.lastName.trim();
-    //this.userProfile.Email = this.userProfileForm.value.email;
     this.userProfile.PhoneNo = this.userProfileForm.value.phoneNo;
     this.userProfile.Gender = this.userProfileForm.value.gender;
     this.userProfile.DOB = this.userProfileForm.value.dob;
-    this.userProfile.Address = this.userProfileForm.value.address.join();
+    this.userProfile.Address = this.userProfileForm.value.address;
     this.userProfile.Languages =
       this.userProfileForm.value?.languages.toString();
 
@@ -235,15 +251,29 @@ export class UserProfileComponent implements OnInit {
   onEditProfile() {
     this.isEdit = true;
 
-    debugger;
-    const addressArray = this.userProfileForm.get('address') as FormArray;
-    addressArray.clear(); // Clear the existing FormArray
+    const address = this.userProfileForm.get('address') as FormArray;
+    address.clear(); // Clear the existing FormArray
 
-    // Split the Address string and add FormControls to the FormArray
-    const addresses = this.userProfile.Address.split(',');
-    addresses.forEach((address: string) => {
-      addressArray.push(new FormControl(address.trim(), Validators.required)); // Add each address
-    });
+    // // Split the Address string and add FormControls to the FormArray
+    // const addresses = this.userProfile.Address.split(',');
+    // addresses.forEach((address: string) => {
+    //   addressArray.push(new FormControl(address.trim(), Validators.required)); // Add each address
+    // });
+
+    this.addressArray.forEach((a : any , index : number) => {
+      address.push(new FormGroup({
+        AddressId : new FormControl(a.AddressId),
+        Address1 :  new FormControl(a.Address1.trim(),Validators.required),
+        Address2 : new FormControl(a.Address2.trim(),Validators.required),
+        CountryId : new FormControl(a.CountryId,Validators.required),
+        StateId : new FormControl(a.StateId,Validators.required),
+        CityId : new FormControl(a.CityId,Validators.required),
+      }))
+
+      this.onCountryChnage({target : {value : a.CountryId}},index)
+
+      this.onStateChange({target : {value : a.StateId}},index)
+    } )
 
     this.userProfileForm.patchValue({
       firstName: this.userProfile.FirstName,
@@ -258,8 +288,6 @@ export class UserProfileComponent implements OnInit {
           : this.photoUrl,
       languages: this.userProfile.Languages?.split(',').map(Number), // maybe null
     });
-
-    this.getCountryList();
   }
 
   getLanguageList() {
@@ -312,7 +340,8 @@ export class UserProfileComponent implements OnInit {
             this.userProfile.UserDetailId =
               data.Data.UserDetailId != 0 ? data.Data.UserDetailId : 0;
             this.photoUrl = data.Data.UserPhoto;
-            this.addressArray = data.Data.Address.split(',');
+            
+            this.addressArray = this.userProfile.Address
           }
         },
         error: (err) => {
@@ -322,6 +351,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   saveUserProfileDetail() {
+    debugger  
     const apiUrl = this.apiUrl.apiUrl.userprofile.saveUserProfileDetail;
     const formData = new FormData();
     formData.append('UserDetailData', JSON.stringify(this.userProfile));
@@ -331,6 +361,7 @@ export class UserProfileComponent implements OnInit {
       .pipe()
       .subscribe({
         next: (data) => {
+          debugger
           if (data && data.Success) {
             this.userProfile.UserDetailId =
               data.Data.UserDetailId != 0 ? data.Data.UserDetailId : 0;

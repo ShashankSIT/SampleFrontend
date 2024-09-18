@@ -9,9 +9,9 @@ import { DataTableModule } from 'src/app/pages/common/data-table/data-table.modu
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonComponentModule } from 'src/app/pages/common/common.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-
+import { ValidateNumberDirective } from 'src/app/core/directives/validate-number.directive';
 @NgModule({
-  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent],
+  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent, ValidateNumberDirective ],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -20,6 +20,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     DataTableModule,
     CommonComponentModule,
     NgSelectModule,
+    
   ],
+  providers : []
 })
 export class UserModule {}

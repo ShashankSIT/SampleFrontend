@@ -165,6 +165,7 @@
                         userFormControl?.['phoneNo']?.invalid &&
                         userFormControl?.['phoneNo']?.errors?.['required']
                     }"
+                    appValidateNumber
                   />
                   <div>
                     <small
@@ -343,41 +344,9 @@
 
               <hr />
 
-              <!-- <div formArrayName="address" >
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label fw-bold h5">Address : </label>
-                    <textarea
-                      class="form-control"
-                      placeholder="Address"
-                      autocomplete="off"
-                      name="address"
-                      id=""
-                      [ngClass]="{
-                        'border-danger':
-                          userFormControl['address'].invalid &&
-                          userFormControl['address'].touched
-                      }"
-                      formControlName="address"
-                      rows="1"
-                    ></textarea>
-                    <div>
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          userFormControl['address'].invalid &&
-                          userFormControl['address'].touched
-                        "
-                      >
-                        *Address is required
-                      </small>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-              <div formArrayName="address">
-                <div class="d-flex justify-content-end">
+              <div formArrayName="address" class="p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h4 class="fw-bold mx-2"> Address </h4>
                   <button
                     type="button"
                     class="btn btn-primary"
@@ -388,57 +357,57 @@
                 </div>
 
                 <div
+                  class="p-2 border border-1 border-dark rounded-2 p-2 my-3 mx-2 bg-primary-subtle"
                   *ngFor="
-                    let control of userProfileForm.get('address')['controls'];
-                    let i = index
-                  "
+                    let control of address.controls;
+                    let i = index;" 
+                    [formGroupName] = "i"   
                 >
-                  <div class="d-flex my-2 justify-content-between">
-                    <input
-                      type="text"
-                      class="form-control w-75"
-                      placeholder="Add Adddress..."
-                      [formControlName]="i"
-                      value="control.value"
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      (click)="removeAddress(i)"
-                    >
-                      Delete
-                    </button>
+                  <div class="">
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-danger" type="button" (click)="removeAddress(i)"> Remove</button>
+                    </div>
+                    <div class="row">
+                      <input type="text" hidden formControlName="AddressId" [value]="i+1"/>
+                      <div class="col-6 my-2">
+                        <input type="text" class="form-control" placeholder="Address line 1" formControlName="Address1">
+                      </div>
+                      <div class="col-6 my-2">
+                        <input type="text" class="form-control" placeholder="Address line 2" formControlName="Address2">
+                      </div>
+                      <div class="col-4 my-2">
+                        <select class="form-select" (change)="onCountryChnage($event,i)" formControlName="CountryId">
+                          <option selected>Select Country</option>
+                          <option *ngFor="let c of countryList" [value]="c.CountryId">
+                            {{ c.CountryName }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-4 my-2">
+                        <select class="form-select" (change)="onStateChange($event,i)" formControlName="StateId">
+                          <option *ngFor="let s of stateList[i]" [value]="s.StateId">
+                            {{ s.StateName }}
+                          </option>
+                        </select>
+                      </div>
+        
+                      <div class="col-4 my-2">
+                        <select class="form-select"  formControlName="CityId">
+                          <option *ngFor="let c of cityList[i]" [value]="c.CityId">
+                            {{ c.CityName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-
-                  <div class="text-danger" *ngIf="control.invalid">
+                  <!-- <div class="text-danger" *ngIf="control.invalid">
                     *Address is Required
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
-              <div class="col-4 my-2">
-                <select class="form-select" (change)="onCountryChnage($event)">
-                  <option *ngFor="let c of countryList" [value]="c.CountryId">
-                    {{ c.CountryName }}
-                  </option>
-                </select>
-              </div>
-
-              <div class="col-4 my-2">
-                <select class="form-select" (change)="onStateChange($event)">
-                  <option *ngFor="let s of stateList" [value]="s.StateId">
-                    {{ s.StateName }}
-                  </option>
-                </select>
-              </div>
-
-              <div class="col-4 my-2">
-                <select class="form-select">
-                  <option *ngFor="let c of cityList" [value]="c.CityId">
-                    {{ c.CityName }}
-                  </option>
-                </select>
-              </div>
+             
+              
             </div>
 
             <div
@@ -487,7 +456,7 @@
                 class="my-1"
                 *ngFor="let i of addressArray; let index = index"
               >
-                <p class="h6">{{ i }}</p>
+                <p class="h6">{{ i.Address1 }}, {{i.Address2}}, {{i.CountryName}}, {{i.StateName}}, {{i.CityName}}</p>
               </div>
             </div>
 
