@@ -10,8 +10,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonComponentModule } from 'src/app/pages/common/common.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ValidateNumberDirective } from 'src/app/core/directives/validate-number.directive';
+import { ValidateAlphabetDirective } from 'src/app/core/directives/validate-alphabet.directive';
 @NgModule({
-  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent, ValidateNumberDirective ],
+  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent, ValidateNumberDirective ,ValidateAlphabetDirective ],
   imports: [
     CommonModule,
     UserRoutingModule,

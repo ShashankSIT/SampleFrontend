@@ -52,4 +52,5 @@ export interface AddressModel {
   CountryName : string;
   StateName : string;
   CityName : string;
+  IsDelete : boolean | false;
 }

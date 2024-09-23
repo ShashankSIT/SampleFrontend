@@ -6,9 +6,11 @@
       </div>
       <div class="card-body">
         <form
+          class="needs-validation"
           [formGroup]="userProfileForm"
           (ngSubmit)="onSubmit()"
           enctype="multipart/form-data"
+          novalidate
         >
           <div class="row justify-content-center">
             <div class="col-md-12 text-center">
@@ -56,7 +58,7 @@
             <div class="container justify-content-center row" *ngIf="isEdit">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">First Name : </label>
+                  <label class="form-label fw-bold h5">First Name </label>
                   <input
                     type="text"
                     class="form-control"
@@ -65,19 +67,41 @@
                     placeholder="First Name"
                     [ngClass]="{
                       'border-danger':
-                        userProfileForm.invalid &&
-                        userFormControl?.['firstName']?.errors?.['required']
+                        userFormControl['firstName'].invalid &&
+                        ((userFormControl['firstName'].untouched && isSubmit) ||
+                          userFormControl['firstName'].touched)
                     }"
+                    appValidateAlphabet
                   />
                   <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
-                        userFormControl?.['firstName']?.errors?.['required']
+                        userFormControl['firstName'].invalid &&
+                        ((userFormControl['firstName'].untouched && isSubmit) ||
+                          userFormControl['firstName'].touched)
                       "
                     >
-                      *First Name is required
+                      <span
+                        *ngIf="
+                          userFormControl?.['firstName']?.errors?.['required']
+                        "
+                        >*First Name is required</span
+                      >
+                      <span
+                        *ngIf="
+                          !userFormControl?.['firstName']?.errors?.[
+                            'required'
+                          ] &&
+                          !userFormControl?.['firstName']?.errors?.[
+                            'noSpaceAllowed'
+                          ] &&
+                          userFormControl?.['firstName']?.errors?.[
+                            'onlyAlphabetAllowed'
+                          ]
+                        "
+                        >* First Name only contains alphabets</span
+                      >
                     </small>
                   </div>
                 </div>
@@ -85,7 +109,7 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">Last Name : </label>
+                  <label class="form-label fw-bold h5">Last Name </label>
                   <input
                     type="text"
                     class="form-control"
@@ -94,19 +118,38 @@
                     placeholder="Last Name"
                     [ngClass]="{
                       'border-danger':
-                        userProfileForm.invalid &&
-                        userFormControl?.['lastName']?.errors?.['required']
+                        userFormControl['lastName'].invalid &&
+                        ((userFormControl['lastName'].untouched && isSubmit) ||
+                          userFormControl['lastName'].touched)
                     }"
+                    appValidateAlphabet
                   />
                   <div>
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
-                        userFormControl?.['lastName']?.errors?.['required']
+                        userFormControl['lastName'].invalid &&
+                        ((userFormControl['lastName'].untouched && isSubmit) ||
+                          userFormControl['lastName'].touched)
                       "
                     >
-                      *Last Name is required
+                      <span
+                        *ngIf="
+                          userFormControl?.['lastName']?.errors?.['required']
+                        "
+                        >*Last Name is required</span
+                      >
+                      <span
+                        *ngIf="
+                          !userFormControl?.['lastName']?.errors?.[
+                            'required'
+                          ] &&
+                          userFormControl?.['lastName']?.errors?.[
+                            'onlyAlphabetAllowed'
+                          ]
+                        "
+                        >* Last Name only contains alphabets</span
+                      >
                     </small>
                   </div>
                 </div>
@@ -114,7 +157,7 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">Email Address : </label>
+                  <label class="form-label fw-bold h5">Email Address </label>
                   <input
                     type="email"
                     class="form-control"
@@ -123,8 +166,9 @@
                     placeholder="Email"
                     [ngClass]="{
                       'border-danger':
-                        userProfileForm.invalid &&
-                        userFormControl?.['email']?.errors?.['required']
+                        userFormControl['email'].invalid &&
+                        ((userFormControl['email'].untouched && isSubmit) ||
+                          userFormControl['email'].touched)
                     }"
                     [readOnly]="isreadonly"
                   />
@@ -132,8 +176,9 @@
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
-                        userFormControl?.['email']?.errors?.['required']
+                        userFormControl['email'].invalid &&
+                        ((userFormControl['email'].untouched && isSubmit) ||
+                          userFormControl['email'].touched)
                       "
                     >
                       *Email is required
@@ -141,7 +186,8 @@
                     <small
                       class="text-danger"
                       *ngIf="
-                        userProfileForm.invalid &&
+                        userFormControl?.['email'].invalid &&
+                        userFormControl?.['email'].touched &&
                         userFormControl?.['email']?.errors?.['email']
                       "
                     >
@@ -153,7 +199,7 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">Phone Number : </label>
+                  <label class="form-label fw-bold h5">Phone Number </label>
                   <input
                     type="number"
                     class="form-control"
@@ -162,38 +208,55 @@
                     placeholder="Phone Number"
                     [ngClass]="{
                       'border-danger':
-                        userFormControl?.['phoneNo']?.invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['required']
+                        userFormControl['phoneNo'].invalid &&
+                        ((userFormControl['phoneNo'].untouched && isSubmit) ||
+                          userFormControl['phoneNo'].touched)
                     }"
                     appValidateNumber
                   />
                   <div>
                     <small
                       class="text-danger"
-                      *ngIf="
-                        userFormControl?.['phoneNo']?.invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['required']
-                      "
+                      *ngIf="userFormControl?.['phoneNo'].touched || isSubmit"
                     >
-                      *Phone Number is required
-                    </small>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        userProfileForm.invalid &&
-                        userFormControl?.['phoneNo'].touched &&
-                        userFormControl?.['phoneNo'].invalid &&
-                        userFormControl?.['phoneNo']?.errors?.['maxlength']
-                      "
-                    >
-                      *Phone Number Should not be a more than 10 length
+                      <!-- Phone number required error -->
+                      <span
+                        *ngIf="
+                          userFormControl?.['phoneNo']?.errors?.['required']
+                        "
+                      >
+                        *Phone Number is required
+                      </span>
+
+                      <!-- Phone number max length error -->
+                      <span
+                        *ngIf="
+                          !userFormControl?.['phoneNo']?.errors?.['required'] &&
+                          userFormControl?.['phoneNo']?.errors?.['maxlength']
+                        "
+                      >
+                        *Phone Number Should not be more than 10 digits
+                      </span>
+
+                      <!-- Phone number min length error -->
+                      <span
+                        *ngIf="
+                          !userFormControl?.['phoneNo']?.errors?.['required'] &&
+                          !userFormControl?.['phoneNo']?.errors?.[
+                            'maxlength'
+                          ] &&
+                          userFormControl?.['phoneNo']?.errors?.['minlength']
+                        "
+                      >
+                        *Phone Number Should be at least 10 digits
+                      </span>
                     </small>
                   </div>
                 </div>
               </div>
 
               <div class="col-md-6">
-                <label class="form-label fw-bold h5">Gender : </label>
+                <label class="form-label fw-bold h5">Gender </label>
                 <br />
                 <div class="form-check form-check-inline">
                   <input
@@ -238,8 +301,9 @@
                   <small
                     class="text-danger"
                     *ngIf="
-                      userProfileForm.controls['gender'].invalid &&
-                      userProfileForm.controls['gender'].touched
+                      userFormControl['gender'].invalid &&
+                      ((userFormControl['gender'].untouched && isSubmit) ||
+                        userFormControl['gender'].touched)
                     "
                   >
                     *Gender is required
@@ -249,7 +313,7 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">Date of Birth : </label>
+                  <label class="form-label fw-bold h5">Date of Birth </label>
                   <input
                     type="date"
                     class="form-control"
@@ -259,7 +323,8 @@
                     [ngClass]="{
                       'border-danger':
                         userFormControl['dob'].invalid &&
-                        userFormControl['dob'].touched
+                        ((userFormControl['dob'].untouched && isSubmit) ||
+                          userFormControl['dob'].touched)
                     }"
                   />
                   <div>
@@ -267,7 +332,8 @@
                       class="text-danger"
                       *ngIf="
                         userFormControl['dob'].invalid &&
-                        userFormControl['dob'].touched
+                        ((userFormControl['dob'].untouched && isSubmit) ||
+                          userFormControl['dob'].touched)
                       "
                     >
                       *Date of Birth is required
@@ -287,7 +353,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label fw-bold h5">Language : </label>
+                  <label class="form-label fw-bold h5">Language </label>
                   <ng-select
                     [items]="languages"
                     bindLabel="Language"
@@ -333,7 +399,8 @@
                       class="text-danger"
                       *ngIf="
                         userFormControl['languages'].invalid &&
-                        userFormControl['languages'].touched
+                        ((userFormControl['languages'].untouched && isSubmit) ||
+                          userFormControl['languages'].touched)
                       "
                     >
                       *Language is required
@@ -346,7 +413,7 @@
 
               <div formArrayName="address" class="p-2">
                 <div class="d-flex justify-content-between align-items-center">
-                  <h4 class="fw-bold mx-2"> Address </h4>
+                  <h4 class="fw-bold mx-2">Address</h4>
                   <button
                     type="button"
                     class="btn btn-primary"
@@ -357,57 +424,176 @@
                 </div>
 
                 <div
-                  class="p-2 border border-1 border-dark rounded-2 p-2 my-3 mx-2 bg-primary-subtle"
-                  *ngFor="
-                    let control of address.controls;
-                    let i = index;" 
-                    [formGroupName] = "i"   
+                  class=""
+                  *ngFor="let control of address.controls; let i = index"
+                  [formGroupName]="i"
                 >
-                  <div class="">
+                  <div
+                    class="border border-1 border-dark rounded-2 p-2 my-3 mx-2"
+                    *ngIf="
+                      !this.userProfileForm.get('address').value[i].IsDelete
+                    "
+                  >
                     <div class="d-flex justify-content-end">
-                      <button class="btn btn-danger" type="button" (click)="removeAddress(i)"> Remove</button>
+                      <button
+                        class="btn btn-danger m-0 d-flex justify-content-center align-items-center"
+                        type="button"
+                        (click)="removeAddress(i)"
+                      >
+                        <i class="material-icons m-0 p-0">delete</i>
+                      </button>
                     </div>
                     <div class="row">
-                      <input type="text" hidden formControlName="AddressId" [value]="i+1"/>
+                      <input
+                        type="text"
+                        hidden
+                        formControlName="AddressId"
+                        [value]="i + 1"
+                      />
                       <div class="col-6 my-2">
-                        <input type="text" class="form-control" placeholder="Address line 1" formControlName="Address1">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Address line 1"
+                          formControlName="Address1"
+                        />
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            address.at(i).get('Address1').invalid &&
+                            ((address.at(i).get('Address1').untouched &&
+                              isSubmit) ||
+                              address.at(i).get('Address1').touched)
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              address.at(i).get('Address1')?.errors?.[
+                                'required'
+                              ]
+                            "
+                            >*Addresss Line 1 Required</span
+                          >
+                          <span
+                          *ngIf="!address.at(i).get('Address1')?.errors?.[
+                          'required'
+                        ] &&
+                            address.at(i).get('Address1')?.errors?.[
+                              'noSpaceAllowed'
+                            ]
+                          "
+                          >*Empty Spaces are not allowed</span
+                        >
+                        </small>
                       </div>
                       <div class="col-6 my-2">
-                        <input type="text" class="form-control" placeholder="Address line 2" formControlName="Address2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Address line 2"
+                          formControlName="Address2"
+                        />
                       </div>
                       <div class="col-4 my-2">
-                        <select class="form-select" (change)="onCountryChnage($event,i)" formControlName="CountryId">
-                          <option selected>Select Country</option>
-                          <option *ngFor="let c of countryList" [value]="c.CountryId">
+                        <select
+                          class="form-select"
+                          (change)="onCountryChnage($event, i)"
+                          formControlName="CountryId"
+                        >
+                          <option selected value="" *ngIf="!(countryList == null)">Select Country</option>
+                          <option
+                            *ngFor="let c of countryList"
+                            [value]="c.CountryId"
+                          >
                             {{ c.CountryName }}
                           </option>
                         </select>
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            address.at(i).get('CountryId').invalid &&
+                            ((address.at(i).get('CountryId').untouched &&
+                              isSubmit) ||
+                              address.at(i).get('CountryId').touched)
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              address.at(i).get('CountryId')?.errors?.[
+                                'required'
+                              ]
+                            "
+                            >*Please select country</span
+                          >
+                        </small>
                       </div>
                       <div class="col-4 my-2">
-                        <select class="form-select" (change)="onStateChange($event,i)" formControlName="StateId">
-                          <option *ngFor="let s of stateList[i]" [value]="s.StateId">
+                        <select
+                          class="form-select"
+                          (change)="onStateChange($event, i)"
+                          formControlName="StateId"
+                        >
+                          <option selected value="">
+                            Select State
+                          </option>
+                          <option
+                            *ngFor="let s of stateList[i]"
+                            [value]="s.StateId"
+                          >
                             {{ s.StateName }}
                           </option>
                         </select>
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            address.at(i).get('StateId').invalid &&
+                            ((address.at(i).get('StateId').untouched &&
+                              isSubmit) ||
+                              address.at(i).get('StateId').touched)
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              address.at(i).get('StateId')?.errors?.['required']
+                            "
+                            >*Please select country</span
+                          >
+                        </small>
                       </div>
-        
+
                       <div class="col-4 my-2">
-                        <select class="form-select"  formControlName="CityId">
-                          <option *ngFor="let c of cityList[i]" [value]="c.CityId">
+                        <select class="form-select" formControlName="CityId">
+                          <option selected value="">
+                            Select City
+                          </option>
+                          <option
+                            *ngFor="let c of cityList[i]"
+                            [value]="c.CityId"
+                          >
                             {{ c.CityName }}
                           </option>
                         </select>
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            address.at(i).get('CityId').invalid &&
+                            ((address.at(i).get('CityId').untouched &&
+                              isSubmit) ||
+                              address.at(i).get('CityId').touched)
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              address.at(i).get('CityId')?.errors?.['required']
+                            "
+                            >*Please select country</span
+                          >
+                        </small>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="text-danger" *ngIf="control.invalid">
-                    *Address is Required
-                  </div> -->
                 </div>
               </div>
-
-             
-              
             </div>
 
             <div
@@ -456,7 +642,12 @@
                 class="my-1"
                 *ngFor="let i of addressArray; let index = index"
               >
-                <p class="h6">{{ i.Address1 }}, {{i.Address2}}, {{i.CountryName}}, {{i.StateName}}, {{i.CityName}}</p>
+                <p class="h6" *ngIf="!i.IsDelete">
+                  <span>{{ i?.Address1 }},</span>
+                  <span *ngIf="i?.Address2">{{ i?.Address2 }},</span>
+                  {{ i.CityName }}, {{ i.StateName }},
+                  {{ i.CountryName }}
+                </p>
               </div>
             </div>
 
