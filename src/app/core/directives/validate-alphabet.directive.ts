@@ -1,15 +1,14 @@
-import { Directive ,HostListener } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
 import { AbstractControl, ValidationErrors, Validator } from '@angular/forms';
 @Directive({
   selector: '[appValidateAlphabet]',
-  standalone: false
+  standalone: false,
 })
 export class ValidateAlphabetDirective {
+  constructor() {}
 
-  constructor() { }
-
-  @HostListener('keypress',['$event'])
-  @HostListener('input',['$event'])
+  @HostListener('keypress', ['$event'])
+  @HostListener('input', ['$event'])
   validate(event: KeyboardEvent) {
     const regex = /^[a-zA-Z]*$/; // Regex to match only alphabetic characters
     if (!regex.test(event.key) && event.key !== 'Backspace') {
@@ -17,13 +16,14 @@ export class ValidateAlphabetDirective {
     }
   }
 
-  @HostListener('paste',['$event'])
+  @HostListener('paste', ['$event'])
   onPaste(event: ClipboardEvent): void {
     const clipboardData = event.clipboardData || (window as any).clipboardData;
     const pastedText = clipboardData.getData('text');
     const regex = /^[a-zA-Z]*$/;
 
-    if (!regex.test(pastedText)) { // Check if pasted text contains non-digit characters
+    if (!regex.test(pastedText)) {
+      // Check if pasted text contains non-digit characters
       event.preventDefault();
     }
   }

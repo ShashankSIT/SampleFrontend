@@ -475,15 +475,16 @@
                             >*Addresss Line 1 Required</span
                           >
                           <span
-                          *ngIf="!address.at(i).get('Address1')?.errors?.[
-                          'required'
-                        ] &&
-                            address.at(i).get('Address1')?.errors?.[
-                              'noSpaceAllowed'
-                            ]
-                          "
-                          >*Empty Spaces are not allowed</span
-                        >
+                            *ngIf="
+                              !address.at(i).get('Address1')?.errors?.[
+                                'required'
+                              ] &&
+                              address.at(i).get('Address1')?.errors?.[
+                                'noSpaceAllowed'
+                              ]
+                            "
+                            >*Empty Spaces are not allowed</span
+                          >
                         </small>
                       </div>
                       <div class="col-6 my-2">
@@ -500,7 +501,13 @@
                           (change)="onCountryChnage($event, i)"
                           formControlName="CountryId"
                         >
-                          <option selected value="" *ngIf="!(countryList == null)">Select Country</option>
+                          <option
+                            selected
+                            value=""
+                            *ngIf="!(countryList == null)"
+                          >
+                            Select Country
+                          </option>
                           <option
                             *ngFor="let c of countryList"
                             [value]="c.CountryId"
@@ -533,9 +540,7 @@
                           (change)="onStateChange($event, i)"
                           formControlName="StateId"
                         >
-                          <option selected value="">
-                            Select State
-                          </option>
+                          <option selected value="">Select State</option>
                           <option
                             *ngFor="let s of stateList[i]"
                             [value]="s.StateId"
@@ -563,9 +568,7 @@
 
                       <div class="col-4 my-2">
                         <select class="form-select" formControlName="CityId">
-                          <option selected value="">
-                            Select City
-                          </option>
+                          <option selected value="">Select City</option>
                           <option
                             *ngFor="let c of cityList[i]"
                             [value]="c.CityId"

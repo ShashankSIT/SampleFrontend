@@ -1,7 +1,6 @@
-import { AbstractControl , FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 export class CustomValidator {
-  
   static maxLengthValidator(maxLength: number) {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value?.toString() || '';
@@ -16,8 +15,7 @@ export class CustomValidator {
     };
   }
 
-
-  static minLengthValidator(minLength : number){
+  static minLengthValidator(minLength: number) {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value?.toString() || '';
       return value.length < minLength
@@ -45,7 +43,7 @@ export class CustomValidator {
     };
   }
 
-  static onlyAlphabetAllowed(control: AbstractControl){
+  static onlyAlphabetAllowed(control: AbstractControl) {
     const value = control.value || '';
     const alphabetRegex = /^[a-zA-Z]+$/; // Regex to match only alphabetic characters
     if (!alphabetRegex.test(value)) {
@@ -59,5 +57,4 @@ export class CustomValidator {
     }
     return null;
   }
-
 }

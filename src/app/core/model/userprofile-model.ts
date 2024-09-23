@@ -49,8 +49,8 @@ export interface AddressModel {
   StateId: number;
   CityId: number;
   UserDetailId: number;
-  CountryName : string;
-  StateName : string;
-  CityName : string;
-  IsDelete : boolean | false;
+  CountryName: string;
+  StateName: string;
+  CityName: string;
+  IsDelete: boolean | false;
 }
