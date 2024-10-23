@@ -499,12 +499,11 @@
                         <select
                           class="form-select"
                           (change)="onCountryChnage($event, i)"
-                          formControlName="CountryId"
+                          formControlName="CountryId" 
                         >
                           <option
-                            selected
                             value=""
-                            *ngIf="!(countryList == null)"
+                            selected
                           >
                             Select Country
                           </option>
@@ -540,7 +539,7 @@
                           (change)="onStateChange($event, i)"
                           formControlName="StateId"
                         >
-                          <option selected value="">Select State</option>
+                          <option value="" selected>Select State</option>
                           <option
                             *ngFor="let s of stateList[i]"
                             [value]="s.StateId"
@@ -568,7 +567,7 @@
 
                       <div class="col-4 my-2">
                         <select class="form-select" formControlName="CityId">
-                          <option selected value="">Select City</option>
+                          <option value="" selected>Select City</option>
                           <option
                             *ngFor="let c of cityList[i]"
                             [value]="c.CityId"
