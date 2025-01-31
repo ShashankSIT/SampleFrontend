@@ -39,33 +39,22 @@ export class HTTPListener implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    //var Spinner = document.getElementById("bootstrapSpinner");
-    // if (Spinner) {
-    //   Spinner.style.display = "block";
-    // }
     if (!this.commonService.byPassLoader(req.url)) {
-      this.sharedService.spinLoader$.next(false); //Will Disable Loader throughout the application
+      this.sharedService.spinLoader$.next(false);
     }
     return next.handle(req).pipe(
       map((event) => {
         return event;
       }),
       catchError((error) => {
-        // if (Spinner) {
-        //   Spinner.style.display = "none";
-        // }
         this.sharedService.spinLoader$.next(false);
         if (error.status == 401) {
           localStorage.clear();
           this.commonService.goToLogin();
-          //this.router.navigate(['/auth/login']);
         }
         return throwError(() => error);
       }),
       finalize(() => {
-        // if (Spinner) {
-        //   Spinner.style.display = "none";
-        // }
         this.sharedService.spinLoader$.next(false);
         this.status.setHttpStatus(false);
       }),

@@ -140,7 +140,7 @@
     ora "5.4.1"
     rxjs "7.8.1"
 
-"@angular/animations@^17.0.0", "@angular/animations@^17.0.0 || ^18.0.0", "@angular/animations@17.3.10":
+"@angular/animations@^17.0.0", "@angular/animations@^17.0.0 || ^18.0.0", "@angular/animations@^18.0.1", "@angular/animations@17.3.10":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/animations/-/animations-17.3.10.tgz"
   integrity sha512-9fR5snTuG4aM2K54TG/6DXcKXMDKZMovZhjQOxO8l68/oqn6fKrHs8DLzckFs0XGRZ+2OyURH8WggFm1Z828rA==
@@ -180,7 +180,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.2", "@angular/common@^17.3.2", "@angular/common@^18.0.0", "@angular/common@>= 12.0.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@17.3.10":
+"@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.2", "@angular/common@^17.3.2", "@angular/common@^18.0.0", "@angular/common@^18.0.1", "@angular/common@>= 12.0.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@17.3.10":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.3.10.tgz"
   integrity sha512-6SfD21M3LujymmZsZQIxAsV8Bj5u6He6ImZ+p2rr7FAhFxpVJyKldK8LCmJcFsBD4srpQcxEZ0iDxXvg+0ihAw==
@@ -208,14 +208,14 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.2", "@angular/core@^17.3.2", "@angular/core@^18.0.0", "@angular/core@>= 12.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@17.3.10":
+"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.2", "@angular/core@^17.3.2", "@angular/core@^18.0.0", "@angular/core@^18.0.1", "@angular/core@>= 12.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@17.3.10":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.3.10.tgz"
   integrity sha512-ocEKu7X0yFCOvgJn1uZy76qjhsjKvULrO1k/BuIX0nwhp61DTGYTvCqKmwCBLM8/gvcKYH5vMKMHoQKtiSGE0A==
   dependencies:
     tslib "^2.3.0"
 
-"@angular/forms@^17.0.0", "@angular/forms@^17.0.0 || ^18.0.0", "@angular/forms@^18.0.0":
+"@angular/forms@^17.0.0", "@angular/forms@^17.0.0 || ^18.0.0", "@angular/forms@^18.0.0", "@angular/forms@^18.0.1":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/forms/-/forms-17.3.10.tgz"
   integrity sha512-0VZWSXDi2M3DAGJlpdV3lo73Yo/73GPRqmfTOrvIoUIenFg5Dz6oNGzvt/1aRkRn6HKccjix6iMpH91EN65pWA==
@@ -5796,6 +5796,13 @@ ng-apexcharts@^1.10.0:
   integrity sha512-Bg85iL3uAuALaj7yQ29XsPYGx8cr3gDrlBPYQtWzEbHcIHP1PBl9IEH9CLF7ESxypW/XPbliH3pc95o5+9gIag==
   dependencies:
     tslib "^2.0.0"
+
+ngx-bootstrap@^18.0.2:
+  version "18.0.2"
+  resolved "https://registry.npmjs.org/ngx-bootstrap/-/ngx-bootstrap-18.0.2.tgz"
+  integrity sha512-fmbLL4dCgPOTZxBMHpJFabHtOXM02b0atHW6queXbFnSouy5jC3UQ0tdcdD2k09H2x2aeRenMt6AcmPcwyoFSg==
+  dependencies:
+    tslib "^2.3.0"
 
 ngx-scrollbar@^13.0.3:
   version "13.0.3"

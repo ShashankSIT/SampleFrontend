@@ -1,5 +1,5 @@
 // angular import
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { Location } from '@angular/common';
 
 // project import
@@ -10,7 +10,7 @@ import { DattaConfig } from 'src/app/app-config';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent {
+export class AdminComponent implements OnChanges {
   navCollapsed: any;
   navCollapsedMob: boolean;
   windowWidth: number;
@@ -25,6 +25,8 @@ export class AdminComponent {
     this.navCollapsed =
       this.windowWidth >= 992 ? DattaConfig.isCollapseMenu : false;
     this.navCollapsedMob = false;
+  }
+  ngOnChanges(changes: SimpleChanges): void {
   }
 
   navMobClick() {

@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthComponent } from './two-factor-auth/two-factor-auth.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoginWithoutPasswordComponent } from './login-without-password/login-without-password.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +17,13 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ResetPasswordComponent,
     TwoFactorAuthComponent,
     ForgotPasswordComponent,
+    LoginWithoutPasswordComponent,
   ],
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
     RouterModule,
-    FormsModule,
+    // FormsModule,
     ReactiveFormsModule,
   ],
 })

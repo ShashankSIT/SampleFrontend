@@ -42,6 +42,7 @@
     "file-saver": "^2.0.5",
     "jquery": "^3.7.1",
     "ng-apexcharts": "^1.10.0",
+    "ngx-bootstrap": "^18.0.2",
     "ngx-scrollbar": "^13.0.3",
     "ngx-skeleton-loader": "^8.1.0",
     "ngx-toastr": "^18.0.0",

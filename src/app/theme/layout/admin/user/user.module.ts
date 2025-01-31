@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { UserRoutingModule } from './user-routing.module';
 import { UserMasterComponent } from './user-master/user-master.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,9 +7,13 @@ import { UserListComponent } from './user-list/user-list.component';
 import { DataTableModule } from 'src/app/pages/common/data-table/data-table.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CommonComponentModule } from 'src/app/pages/common/common.module';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { NumebersOnlyDirective } from 'src/app/directives/numebers-only.directive';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 @NgModule({
-  declarations: [UserMasterComponent, UserListComponent],
+  declarations: [UserMasterComponent, UserListComponent, UserProfileComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -19,6 +22,10 @@ import { CommonComponentModule } from 'src/app/pages/common/common.module';
     DataTableModule,
     NgSelectModule,
     CommonComponentModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NumebersOnlyDirective,
+    BsDatepickerModule.forRoot()
   ],
 })
 export class UserModule {}

@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthComponent } from './two-factor-auth/two-factor-auth.component';
+import { LoginWithoutPasswordComponent } from './login-without-password/login-without-password.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'two-factor-auth',
     component: TwoFactorAuthComponent,
+  },
+  {
+    path: 'login-without-password',
+    component: LoginWithoutPasswordComponent,
   },
 ];
 

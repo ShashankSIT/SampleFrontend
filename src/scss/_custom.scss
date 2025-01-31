@@ -67,7 +67,7 @@ pre code {
   opacity: 1;
 }
 
-.table-striped > tbody > tr:nth-of-type(odd) > * {
+.table-striped>tbody>tr:nth-of-type(odd)>* {
   --bs-table-bg-type: #cdd8e2;
 }
 
@@ -112,7 +112,7 @@ a.page-link {
 }
 
 .page-link.disabled,
-.disabled > .page-link {
+.disabled>.page-link {
   background-color: #cdd8e2 !important;
   color: #60728e4a !important;
 }
@@ -183,4 +183,15 @@ mat-paginator.mat-mdc-paginator {
     background-color: #9d6da6 !important;
     color: white !important;
   }
+}
+
+.theme-green .bs-datepicker-head {
+  background-color: $primary-color;
+}
+
+.theme-green .bs-datepicker-body table td span.selected,
+.theme-green .bs-datepicker-body table td.selected span,
+.theme-green .bs-datepicker-body table td span[class*=select-]:after,
+.theme-green .bs-datepicker-body table td[class*=select-] span:after {
+  background-color: $primary-color;
 }

@@ -8,6 +8,7 @@ export class ApiUrlHelper {
     login: {
       loginUser: 'login/LoginUser',
       forgotPassword: 'login/ForgotPassword',
+      loginWithoutPassword: 'login/LoginWithoutPassword',
       resetForgotPassword: 'login/ResetForgotPassword',
       validateResetPassword: 'login/ValidateResetPassword',
       resetPassword: 'login/ResetPassword',
@@ -29,6 +30,7 @@ export class ApiUrlHelper {
       saveUser: 'user/SaveUser',
       getRolesList: 'user/GetRolesList',
       getUserList: 'user/GetUserList',
+      getUserDetailsList: 'user/GetUserDetailsList',
       exportUserList: 'user/ExportUserList',
       getUserDropdownList: 'user/GetUserDropdownList',
       getCompanyDropdownList: 'user/GetCompanyDropdownList',
@@ -36,6 +38,11 @@ export class ApiUrlHelper {
       deleteUser: 'user/deleteUser',
       deleteAllUser: 'user/DeleteAllUser',
       deleteUserByStringSplit: 'user/DeleteMultipleRecords',
+    },
+    cityStateCountry: {
+      getCities: 'Common/GetCityList',
+      getStates: 'Common/GetStateList',
+      getCountries: 'Common/GetCountryList',
     },
   };
 }

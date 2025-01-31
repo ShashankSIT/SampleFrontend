@@ -36,7 +36,8 @@
               "src/styles.scss",
               "./node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/ngx-toastr/toastr.css",
-              "node_modules/datatables.net-dt/css/dataTables.dataTables.min.css"
+              "node_modules/datatables.net-dt/css/dataTables.dataTables.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

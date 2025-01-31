@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserMasterComponent } from './user-master/user-master.component';
 import { canActivate } from 'src/app/auth-gaurd/auth.guard';
 import { UserListComponent } from './user-list/user-list.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: UserMasterComponent,
+    canActivate: [canActivate],
+  },
+  {
+    path: 'profile',
+    component: UserProfileComponent,
     canActivate: [canActivate],
   },
 ];

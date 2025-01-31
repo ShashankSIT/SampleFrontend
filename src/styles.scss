@@ -36,7 +36,13 @@
 @import "ag-grid-community/styles/ag-theme-material.css";
 /*Ag-Grid CSS*/
 
+/*bsDatepickerCSS*/
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+/*bsDatepickerCSS*/
+
+
 @import "scss/custom";
+
 body {
   font-family: "Titillium Web", sans-serif;
 }
@@ -53,6 +59,7 @@ span .feather {
   background-color: #fc6180;
   border-color: #fc6180;
   color: #fff;
+
   &:hover {
     background-color: #fc6180;
     border-color: #fc6180;
@@ -77,3 +84,4 @@ form label {
 .w-25 {
   width: 25%;
 }
+
